@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentActivity;
  */
 public class EventListActivity extends FragmentActivity {
 
+    //Asen test comit
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
