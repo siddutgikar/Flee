@@ -9,7 +9,7 @@ import android.os.PersistableBundle;
  */
 public class LoginActivity extends Activity {
 
-
+    //yo whats up - AL
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
