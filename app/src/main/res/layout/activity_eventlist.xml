@@ -30,12 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:visibility="gone">
 
         <Spinner
             android:id="@+id/srch_Category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"
+            android:entries="@array/categoryArray"></Spinner>
 
         <EditText
             android:id="@+id/srch_Location"
@@ -44,19 +46,14 @@
             android:hint="Search by location" />
 
         <EditText
-
             android:id="@+id/srch_Date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </EditText>
+            android:layout_height="wrap_content"></EditText>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray">
-
-        </View>
+            android:background="@android:color/darker_gray"></View>
 
         <Button
             android:id="@+id/btnSearch"

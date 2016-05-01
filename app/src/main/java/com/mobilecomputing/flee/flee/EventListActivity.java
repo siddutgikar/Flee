@@ -1,7 +1,6 @@
 package com.mobilecomputing.flee.flee;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -10,12 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+
+import com.mobilecomputing.flee.flee.fragments.EventListFragment;
+import com.mobilecomputing.flee.flee.fragments.MapDispFragment;
 
 /**
  * Created by siddh on 4/22/2016.
  */
-public class EventListActivity extends FragmentActivity implements View.OnClickListener, Animation.AnimationListener {
+public class EventListActivity extends FragmentActivity implements View.OnClickListener, Animation.AnimationListener, AdapterView.OnItemSelectedListener, EventListFragment.EventListInterface, MapDispFragment.MapFragmentInterface {
 
     /**
      * Flag to decide when search panel can be seen
@@ -32,6 +37,21 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     LinearLayout lnSearchLayout;
 
+    /**
+     * Spinner for Category
+     */
+    Spinner spnCategory;
+
+    /**
+     * Edit text for search by Date
+     */
+    EditText edDate;
+
+    /**
+     * Edit text for search by Location
+     */
+    EditText edLocation;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +65,10 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      * Will initialise all the UI elements
      */
     private void initView() {
-        lnSearchLayout = (LinearLayout)findViewById(R.id.searchPanelLayout);
+        lnSearchLayout = (LinearLayout) findViewById(R.id.searchPanelLayout);
+        edLocation = (EditText) findViewById(R.id.srch_Location);
+        edDate = (EditText) findViewById(R.id.srch_Date);
+        spnCategory = (Spinner) findViewById(R.id.srch_Category);
 
         DisplayMetrics metrics = this.getResources()
                 .getDisplayMetrics();
@@ -56,6 +79,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         transOut = new TranslateAnimation(0, width, 0, 0);
         transOut.setAnimationListener(this);
         transOut.setDuration(300);
+
 
     }
 
@@ -85,8 +109,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                 lnSearchLayout.clearAnimation();
                 lnSearchLayout.setAnimation(transOut);
                 lnSearchLayout.startAnimation(transOut);
-                isSearchPanelVisible = false;
                 lnSearchLayout.setVisibility(View.GONE);
+                isSearchPanelVisible = false;
                 break;
         }
     }
@@ -116,7 +140,9 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.btnSearch:
+                animatePanel(2);
+                break;
 
         }
     }
@@ -144,6 +170,21 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     @Override
     public void onAnimationRepeat(Animation animation) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void send() {
 
     }
 }

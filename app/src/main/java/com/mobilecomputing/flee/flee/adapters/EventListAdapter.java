@@ -1,5 +1,5 @@
 
-package ui.adapters;
+package com.mobilecomputing.flee.flee.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import data.EventBean;
+import com.mobilecomputing.flee.flee.data.EventBean;
 
 /**
  * Created by siddh on 4/22/2016.

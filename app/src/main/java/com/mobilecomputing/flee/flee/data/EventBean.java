@@ -1,4 +1,4 @@
-package data;
+package com.mobilecomputing.flee.flee.data;
 
 /**
  * Created by siddh on 4/27/2016.

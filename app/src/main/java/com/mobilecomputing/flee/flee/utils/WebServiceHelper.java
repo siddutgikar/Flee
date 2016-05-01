@@ -1,4 +1,4 @@
-package utils;
+package com.mobilecomputing.flee.flee.utils;
 
 
 import android.util.Log;
@@ -45,14 +45,14 @@ public class WebServiceHelper {
 
     /**
      * Will handle Post Requests ..
-     * THe Json String is the data being poseted to the server
+     * THe Json String is the com.mobilecomputing.flee.flee.data being poseted to the server
      * @param url
      * @param json
      * @return
      */
     public Response POST(String url, String json) {
         try {
-            Log.d(TAG+" POST",url + "  data: "+json);
+            Log.d(TAG+" POST",url + "  com.mobilecomputing.flee.flee.data: "+json);
             RequestBody body = RequestBody.create(JSON, json);
             Request request = new Request.Builder()
                     .url(url)
