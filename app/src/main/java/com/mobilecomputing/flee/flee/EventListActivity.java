@@ -184,7 +184,12 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     }
 
     @Override
-    public void send() {
+    public void sendFromEventList() {
+
+    }
+
+    @Override
+    public void sendFromMap() {
 
     }
 }

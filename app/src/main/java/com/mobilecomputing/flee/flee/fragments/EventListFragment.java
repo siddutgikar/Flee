@@ -37,7 +37,7 @@ public class EventListFragment extends Fragment {
     public interface EventListInterface
     {
 
-    public void send();
+    public void sendFromEventList();
     }
 
 }

@@ -39,6 +39,6 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
 
     public interface MapFragmentInterface
     {
-        public void send();
+        public void sendFromMap();
     }
 }
