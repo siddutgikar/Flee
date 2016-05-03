@@ -1,8 +1,12 @@
 package com.mobilecomputing.flee.flee;
 
+import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,9 +17,17 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.mobilecomputing.flee.flee.fragments.EventListFragment;
 import com.mobilecomputing.flee.flee.fragments.MapDispFragment;
+import com.mobilecomputing.flee.flee.utils.Constants;
+import com.mobilecomputing.flee.flee.utils.WebServiceHelper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.Response;
 
 /**
  * Created by siddh on 4/22/2016.
@@ -52,12 +64,24 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     EditText edLocation;
 
+    MapDispFragment mapDispFragment;
+
+    EventListFragment eventListFragment;
+
+    String url = "";
+
+    String responseString = "";
+
+    int responseCode = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventlist);
         initView();
+
+        EventListTask getEventTask = new EventListTask();
+        getEventTask.execute();
 
     }
 
@@ -70,6 +94,16 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         edDate = (EditText) findViewById(R.id.srch_Date);
         spnCategory = (Spinner) findViewById(R.id.srch_Category);
 
+        eventListFragment = new EventListFragment();
+        mapDispFragment = new MapDispFragment();
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.frame_eventList, eventListFragment);
+        //transaction.replace(R.id.frame_Content, mapDispFragment);
+        transaction.commit();
+        FragmentManager fm = getSupportFragmentManager();
+        mapDispFragment = new MapDispFragment();
+        fm.beginTransaction().replace(R.id.frame_Content, mapDispFragment).commit();
         DisplayMetrics metrics = this.getResources()
                 .getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -79,7 +113,6 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         transOut = new TranslateAnimation(0, width, 0, 0);
         transOut.setAnimationListener(this);
         transOut.setDuration(300);
-
 
     }
 
@@ -184,7 +217,71 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     }
 
     @Override
-    public void send() {
+    public void sendFromEventList() {
 
     }
+
+    @Override
+    public void sendFromMap() {
+
+    }
+
+
+    /**
+     *
+     */
+    public class EventListTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            prepareUrl();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+                responseString = "";
+                Log.d("URL", url);
+                WebServiceHelper serviceHelper = new WebServiceHelper();
+                Response response = serviceHelper.GET(url);
+                if (response != null) {
+                    responseCode = response.code();
+                    Log.d("DoInBack Response Code", "" + responseCode);
+                    if (responseCode == Constants.HTTP_OK_200) {
+                        responseString = response.body().string();
+                    }
+                }
+                return responseString;
+            } catch (Exception ex) {
+                Log.e("Async Task", ex.toString());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                if (s != null && s.length() > 0) {
+
+
+                }
+            } catch (Exception ex) {
+                Log.e("OnPostExecute", ex.toString());
+
+            }
+        }
+    }
+
+
+    /**
+     * This Function will build the URL
+     */
+    private void prepareUrl() {
+        url = Constants.BASE_EVENT_URL + Constants.QUERY_ZIP + "21227" + Constants.QUERY_PAGE_SIZE + "5" + Constants.URL_AUTH;
+    }
+
+
 }
