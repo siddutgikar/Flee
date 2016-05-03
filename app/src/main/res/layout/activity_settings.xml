@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        android:text="select one or more"
+        android:fontFamily="sans-serif-black" />
+
+    <!--   Customized Checkboxes  -->
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableRow>
+            <CheckBox
+                android:id="@+id/checkBoxCustomized11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sports"
+                android:checked="true"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="music"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="food"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+        </TableRow>
+        <TableRow>
+            <CheckBox
+                android:id="@+id/checkBoxCustomized21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="pets"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="movie"
+                android:checked="true"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="family"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+        </TableRow>
+        <TableRow>
+            <CheckBox
+                android:id="@+id/checkBoxCustomized31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="fashion"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="arts &amp; craft"
+                android:checked="false"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+            <CheckBox
+                android:id="@+id/checkBoxCustomized33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="book club"
+                android:checked="true"
+                android:button="@drawable/settings_checkbox_design"
+                android:textSize="20dp" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
