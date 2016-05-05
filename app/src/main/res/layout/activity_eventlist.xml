@@ -25,10 +25,19 @@
         </FrameLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFC62C">
+
+    </View>
+
     <LinearLayout
         android:id="@+id/searchPanelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B3FFFFFF"
         android:orientation="vertical"
         android:padding="5dp"
         android:visibility="gone">

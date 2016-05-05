@@ -12,6 +12,15 @@ public class EventBean {
         this.name = name;
     }
 
+    public String getDistance() {
+
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
     public String getTopic() {
         return topic;
     }
@@ -20,19 +29,19 @@ public class EventBean {
         this.topic = topic;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -92,15 +101,23 @@ public class EventBean {
         this.categoryId = categoryId;
     }
 
+    public String getColorIndex() {
+        return colorIndex;
+    }
+
+    public void setColorIndex(String colorIndex) {
+        this.colorIndex = colorIndex;
+    }
+
     public long id;
 
     private String name;
 
     private String topic;
 
-    private float latitude;
+    private double latitude;
 
-    private float longitude;
+    private double longitude;
 
     private int countOfPeople;
 
@@ -114,5 +131,8 @@ public class EventBean {
 
     private int categoryId;
 
+    private String distance;
+
+    private String colorIndex;
 
 }

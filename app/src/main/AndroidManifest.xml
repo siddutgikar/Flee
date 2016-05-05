@@ -15,6 +15,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBTZ_FCdr9bKPisCstgthlCyzzKLhcBR7s" />
+
         <activity
             android:name=".SplashScreenActivity"
             android:label="SplashScreen"
@@ -38,9 +39,8 @@
             android:theme="@android:style/Theme.DeviceDefault.Light"></activity>
         <activity
             android:name=".EventListActivity"
-            android:label="EventList"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.DeviceDefault.Light">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

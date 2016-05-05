@@ -17,15 +17,16 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.mobilecomputing.flee.flee.data.EventBean;
 import com.mobilecomputing.flee.flee.fragments.EventListFragment;
 import com.mobilecomputing.flee.flee.fragments.MapDispFragment;
 import com.mobilecomputing.flee.flee.utils.Constants;
+import com.mobilecomputing.flee.flee.utils.JsonResponseParser;
+import com.mobilecomputing.flee.flee.utils.Utilities;
 import com.mobilecomputing.flee.flee.utils.WebServiceHelper;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 import okhttp3.Response;
 
@@ -266,7 +267,10 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
             try {
                 if (s != null && s.length() > 0) {
 
-
+                    ArrayList<EventBean> eventBeanArrayList = JsonResponseParser.parseEventListResponse(s);
+                    Log.d("PostExecute", "" + eventBeanArrayList.size());
+                    eventListFragment.setEventData(eventBeanArrayList);
+                    mapDispFragment.setMarkers(eventBeanArrayList);
                 }
             } catch (Exception ex) {
                 Log.e("OnPostExecute", ex.toString());
@@ -280,7 +284,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      * This Function will build the URL
      */
     private void prepareUrl() {
-        url = Constants.BASE_EVENT_URL + Constants.QUERY_ZIP + "21227" + Constants.QUERY_PAGE_SIZE + "5" + Constants.URL_AUTH;
+        url = Constants.BASE_EVENT_URL + Constants.QUERY_ZIP + "21227" + Constants.QUERY_PAGE_SIZE + "50" + Constants.QUERY_TIME + Utilities.getCurrentTimeinEpoc(null) + "," + Utilities.getNextTimeinEpoc(null) + Constants.URL_AUTH;
     }
 
 

@@ -20,7 +20,7 @@ public class Constants {
 
     public static String BASE_CATEGORY_URL = "https://api.meetup.com/2/categories?";
 
-    public static String URL_AUTH ="&sign=true&key=51576d40616477473754413e2e2b6033";
+    public static String URL_AUTH = "&sign=true&key=51576d40616477473754413e2e2b6033";
 
     public static String QUERY_TOPIC = "&topic=";
 
@@ -32,5 +32,6 @@ public class Constants {
 
     public static String QUERY_ZIP = "&zip=";
 
+    public static String QUERY_TIME = "&time=";
 
 }

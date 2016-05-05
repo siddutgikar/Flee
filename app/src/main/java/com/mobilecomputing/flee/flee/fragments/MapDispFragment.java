@@ -1,16 +1,27 @@
 package com.mobilecomputing.flee.flee.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 import com.mobilecomputing.flee.flee.R;
+import com.mobilecomputing.flee.flee.data.EventBean;
+
+import java.util.ArrayList;
 
 /**
  * Created by siddh on 4/22/2016.
@@ -19,6 +30,7 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
 
     GoogleMap googleMap;
 
+    ArrayList<EventBean> _eventList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,10 +61,63 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        if (googleMap != null) {
-
+    public void onMapReady(GoogleMap gMap) {
+        if (gMap != null) {
+            googleMap = gMap;
+            plotMarkers();
         }
+    }
+
+
+    public void plotMarkers() {
+        if (googleMap != null && _eventList != null && _eventList.size() > 0) {
+            IconGenerator myFactory = new IconGenerator(getActivity());
+            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+            for (int i = 0; i < _eventList.size(); i++) {
+              //  if (i < 50) {
+                    double lat = _eventList.get(i).getLatitude();
+                    double lng = _eventList.get(i).getLongitude();
+                    if (lat != 0.0 && lng != 0.0) {
+                        if (_eventList.get(i).getColorIndex().equals("#754C9A")) {
+                            myFactory.setBackground(getResources().getDrawable(R.drawable.purple));
+                        } else if (_eventList.get(i).getColorIndex().equals("#65C0AD")) {
+                            myFactory.setBackground(getResources().getDrawable(R.drawable.green));
+                        } else if (_eventList.get(i).getColorIndex().equals("#E37245")) {
+                            myFactory.setBackground(getResources().getDrawable(R.drawable.orange));
+                        } else {
+                            myFactory.setBackground(getResources().getDrawable(R.drawable.yellow));
+                        }
+                        myFactory.setTextAppearance(getActivity(), R.style.markerStyle);
+                        Bitmap icon = myFactory.makeIcon("" + (i + 1));
+                        boundsBuilder.include(new LatLng(lat, lng));
+                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(icon)).position(new LatLng(lat, lng)).title(_eventList.get(i).getName()));
+
+
+                //    }
+                }
+            }
+
+            LatLngBounds mapBounds = boundsBuilder.build();
+            // begin new code:
+            int width = getResources().getDisplayMetrics().widthPixels;
+            int height = getResources().getDisplayMetrics().heightPixels;
+            int padding = (int) (width * 0.12);
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(mapBounds, width, height, padding);
+            googleMap.animateCamera(cu);
+            googleMap.moveCamera(cu);
+        }
+
+
+    }
+
+
+    /**
+     * @param eventBeanArrayList
+     */
+    public void setMarkers(ArrayList<EventBean> eventBeanArrayList) {
+        _eventList = eventBeanArrayList;
+        // plotMarkers();
+
     }
 
     public interface MapFragmentInterface {

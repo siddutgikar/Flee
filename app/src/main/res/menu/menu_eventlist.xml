@@ -1,10 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mobilecomputing.siddharth.assignment1.MainActivity">
     <item
+        android:id="@+id/event_menuadd"
+        android:icon="@drawable/add"
+        android:showAsAction="always"
+        android:title="Add"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/event_menufilter"
+        android:icon="@drawable/filter"
+        android:showAsAction="always"
+        android:title="Settings"
+        tools:ignore="AppCompatResource" />
+    <item
         android:id="@+id/event_menusearch"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/search"
+        android:showAsAction="always"
         android:title="Search"
-        android:showAsAction="always"  />
+        tools:ignore="AppCompatResource" />
 </menu>
