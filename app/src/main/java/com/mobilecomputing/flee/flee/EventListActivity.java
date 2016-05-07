@@ -217,13 +217,25 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     }
 
+
     @Override
-    public void sendFromEventList() {
+    public void sendFromMap() {
 
     }
 
     @Override
-    public void sendFromMap() {
+    public void eventListClick(EventBean selectedBean) {
+
+
+    }
+
+    @Override
+    public void eventListLongClick(EventBean selectedBean) {
+
+        if (mapDispFragment != null) {
+            mapDispFragment.setLocationFocus(selectedBean);
+
+        }
 
     }
 

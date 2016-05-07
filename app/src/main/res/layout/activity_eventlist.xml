@@ -23,7 +23,15 @@
             android:layout_weight="1">
 
         </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_Details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
     </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

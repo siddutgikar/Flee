@@ -1,5 +1,6 @@
 package com.mobilecomputing.flee.flee.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,9 +8,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mobilecomputing.flee.flee.EventListActivity;
 import com.mobilecomputing.flee.flee.R;
 import com.mobilecomputing.flee.flee.adapters.EventListAdapter;
 import com.mobilecomputing.flee.flee.data.EventBean;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by siddh on 4/22/2016.
  */
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 
     ListView eventListView2;
@@ -30,6 +34,9 @@ public class EventListFragment extends Fragment {
 
     Typeface fedraSansStdBold;
 
+    EventListActivity eventListActivity;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,14 @@ public class EventListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        eventListActivity = (EventListActivity) context;
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        eventListActivity = (EventListActivity) activity;
     }
 
     @Override
@@ -61,6 +76,8 @@ public class EventListFragment extends Fragment {
         fedraSansStdBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/FedraSansStd-Bold.ttf");
         TextView eventListTitle = (TextView) v.findViewById(R.id.eventListTitle);
         eventListTitle.setTypeface(fedraSansStdBold);
+        eventListView2.setOnItemClickListener(this);
+        eventListView2.setOnItemLongClickListener(this);
     }
 
 
@@ -81,10 +98,30 @@ public class EventListFragment extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Toast.makeText(getActivity(), _eventList.get(position).getName(), Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+        if (eventListActivity != null) {
+            eventListActivity.eventListLongClick(_eventList.get(position));
+        }
+
+        return true;
+    }
+
 
     public interface EventListInterface {
 
-        public void sendFromEventList();
+        public void eventListClick(EventBean selectedBean);
+
+        public void eventListLongClick(EventBean selectedBean);
+
     }
 
 }
