@@ -15,10 +15,12 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.mobilecomputing.flee.flee.data.EventBean;
+import com.mobilecomputing.flee.flee.fragments.EventDetailsFragment;
 import com.mobilecomputing.flee.flee.fragments.EventListFragment;
 import com.mobilecomputing.flee.flee.fragments.MapDispFragment;
 import com.mobilecomputing.flee.flee.utils.Constants;
@@ -42,8 +44,11 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     /**
      * Animations for sliding of Search Panel
      */
-    TranslateAnimation transIn;
-    TranslateAnimation transOut;
+    TranslateAnimation transIn_Right;
+    TranslateAnimation transOut_Right;
+
+    TranslateAnimation transIn_Left;
+    TranslateAnimation transOut_Left;
 
     /**
      * Search Panel Layout
@@ -69,11 +74,21 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     EventListFragment eventListFragment;
 
+    EventDetailsFragment eventDetailsFragment;
+
     String url = "";
 
     String responseString = "";
 
     int responseCode = 0;
+
+    /**
+     * Frame Layout for loading the Detail Screen fragment
+     */
+    FrameLayout detailsLayout;
+
+    LinearLayout lnFrameContainer;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +105,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      * Will initialise all the UI elements
      */
     private void initView() {
+        lnFrameContainer = (LinearLayout) findViewById(R.id.frame_Containers);
+        detailsLayout = (FrameLayout) findViewById(R.id.frame_Details);
         lnSearchLayout = (LinearLayout) findViewById(R.id.searchPanelLayout);
         edLocation = (EditText) findViewById(R.id.srch_Location);
         edDate = (EditText) findViewById(R.id.srch_Date);
@@ -97,9 +114,10 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
         eventListFragment = new EventListFragment();
         mapDispFragment = new MapDispFragment();
-
+        eventDetailsFragment = new EventDetailsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_eventList, eventListFragment);
+        transaction.add(R.id.frame_Details, eventDetailsFragment);
         //transaction.replace(R.id.frame_Content, mapDispFragment);
         transaction.commit();
         FragmentManager fm = getSupportFragmentManager();
@@ -108,12 +126,19 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         DisplayMetrics metrics = this.getResources()
                 .getDisplayMetrics();
         int width = metrics.widthPixels;
-        transIn = new TranslateAnimation(width, 0, 0, 0);
-        transIn.setAnimationListener(this);
-        transIn.setDuration(300);
-        transOut = new TranslateAnimation(0, width, 0, 0);
-        transOut.setAnimationListener(this);
-        transOut.setDuration(300);
+        transIn_Right = new TranslateAnimation(width, 0, 0, 0);
+        transIn_Right.setAnimationListener(this);
+        transIn_Right.setDuration(500);
+        transOut_Right = new TranslateAnimation(0, width, 0, 0);
+        transOut_Right.setAnimationListener(this);
+        transOut_Right.setDuration(500);
+
+        transIn_Left = new TranslateAnimation(0, -width, 0, 0);
+        transIn_Left.setAnimationListener(this);
+        transIn_Left.setDuration(500);
+        transOut_Left = new TranslateAnimation(-width, 0, 0, 0);
+        transOut_Left.setAnimationListener(this);
+        transOut_Left.setDuration(500);
 
     }
 
@@ -134,17 +159,45 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
             case 1:
                 lnSearchLayout.bringToFront();
                 lnSearchLayout.clearAnimation();
-                lnSearchLayout.setAnimation(transIn);
-                lnSearchLayout.startAnimation(transIn);
+                lnSearchLayout.setAnimation(transIn_Right);
+                lnSearchLayout.startAnimation(transIn_Right);
                 lnSearchLayout.setVisibility(View.VISIBLE);
                 isSearchPanelVisible = true;
                 break;
             case 2:
                 lnSearchLayout.clearAnimation();
-                lnSearchLayout.setAnimation(transOut);
-                lnSearchLayout.startAnimation(transOut);
+                lnSearchLayout.setAnimation(transOut_Right);
+                lnSearchLayout.startAnimation(transOut_Right);
                 lnSearchLayout.setVisibility(View.GONE);
                 isSearchPanelVisible = false;
+                break;
+            case 3:
+
+                //detailsLayout.bringToFront();
+                detailsLayout.clearAnimation();
+                detailsLayout.setAnimation(transIn_Right);
+                detailsLayout.startAnimation(transIn_Right);
+                detailsLayout.setVisibility(View.VISIBLE);
+
+               // lnFrameContainer.bringToFront();
+                lnFrameContainer.clearAnimation();
+                lnFrameContainer.setAnimation(transIn_Left);
+                lnFrameContainer.startAnimation(transIn_Left);
+                lnFrameContainer.setVisibility(View.GONE);
+
+                break;
+            case 4:
+
+                detailsLayout.clearAnimation();
+                detailsLayout.setAnimation(transOut_Right);
+                detailsLayout.startAnimation(transOut_Right);
+                detailsLayout.setVisibility(View.GONE);
+
+                lnFrameContainer.clearAnimation();
+                lnFrameContainer.setAnimation(transOut_Left);
+                lnFrameContainer.startAnimation(transOut_Left);
+                lnFrameContainer.setVisibility(View.VISIBLE);
+
                 break;
         }
     }
@@ -224,8 +277,26 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     }
 
     @Override
+    public void onBackPressed() {
+        if (detailsLayout.getVisibility() == View.VISIBLE) {
+            if (!isAnimating) {
+                animatePanel(4);
+            }
+
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void eventListClick(EventBean selectedBean) {
 
+        if (selectedBean != null & eventDetailsFragment != null) {
+            eventDetailsFragment.setEventDetails(selectedBean);
+            if (!isAnimating && detailsLayout.getVisibility() == View.GONE) {
+                animatePanel(3);
+            }
+        }
 
     }
 

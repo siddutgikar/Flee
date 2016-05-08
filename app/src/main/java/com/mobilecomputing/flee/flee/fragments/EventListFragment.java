@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobilecomputing.flee.flee.EventListActivity;
 import com.mobilecomputing.flee.flee.R;
@@ -101,7 +100,9 @@ public class EventListFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Toast.makeText(getActivity(), _eventList.get(position).getName(), Toast.LENGTH_LONG).show();
+        if (eventListActivity != null) {
+            eventListActivity.eventListClick(_eventList.get(position));
+        }
 
     }
 

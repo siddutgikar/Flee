@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/frame_Containers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -24,14 +25,16 @@
 
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/frame_Details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        </FrameLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/frame_Details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
