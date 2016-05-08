@@ -93,12 +93,10 @@ public class EventListAdapter extends BaseAdapter {
         long time = _eventList.get(position).getTime();
         if (time > 0) {
 
-            String date = new SimpleDateFormat("dd MMM hh:mm")
+            String date = new SimpleDateFormat("dd MMM hh:mm a")
                     .format(new java.util.Date(_eventList.get(position).getTime() * 1000));
             hold.txtTime.setText(date);
-        }
-        else
-        {
+        } else {
             hold.txtTime.setText("soon...");
         }
         hold.txtTime.setTypeface(fedraSansStdBook);
