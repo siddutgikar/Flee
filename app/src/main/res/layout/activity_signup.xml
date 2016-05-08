@@ -27,7 +27,9 @@
         android:layout_gravity="center_horizontal"
         android:hint="First Name"
         android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"/>
+        android:background="@drawable/share_button_selector5"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -37,7 +39,9 @@
         android:layout_gravity="center_horizontal"
         android:hint="Last Name"
         android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"/>
+        android:background="@drawable/share_button_selector5"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -47,7 +51,9 @@
         android:layout_gravity="center_horizontal"
         android:hint="Email or Username"
         android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"/>
+        android:background="@drawable/share_button_selector5"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -59,10 +65,12 @@
         android:layout_gravity="center_horizontal"
         android:hint="Password"
         android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"/>
+        android:background="@drawable/share_button_selector5"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="FINISH"
         android:id="@+id/finishButton"
