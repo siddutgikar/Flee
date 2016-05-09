@@ -1,6 +1,8 @@
 package com.mobilecomputing.flee.flee;
 
+import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,11 +16,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.mobilecomputing.flee.flee.data.EventBean;
 import com.mobilecomputing.flee.flee.fragments.EventDetailsFragment;
@@ -30,6 +34,7 @@ import com.mobilecomputing.flee.flee.utils.Utilities;
 import com.mobilecomputing.flee.flee.utils.WebServiceHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.Response;
 
@@ -64,7 +69,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     /**
      * Edit text for search by Date
      */
-    EditText edDate;
+    TextView edDate;
 
     /**
      * Edit text for search by Location
@@ -88,9 +93,25 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     FrameLayout detailsLayout;
 
+    /**
+     * The layout
+     */
     LinearLayout lnFrameContainer;
 
+    /**
+     *
+     */
     ProgressBar progressBar;
+
+    /**
+     * Date picker Dialog for Search Date
+     */
+    DatePickerDialog.OnDateSetListener fromDatepickerdialog;
+
+    /**
+     *
+     */
+    private Calendar calendar = Calendar.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,15 +132,30 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         detailsLayout = (FrameLayout) findViewById(R.id.frame_Details);
         lnSearchLayout = (LinearLayout) findViewById(R.id.searchPanelLayout);
         edLocation = (EditText) findViewById(R.id.srch_Location);
-        edDate = (EditText) findViewById(R.id.srch_Date);
+        edDate = (TextView) findViewById(R.id.srch_Date);
         spnCategory = (Spinner) findViewById(R.id.srch_Category);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         eventListFragment = new EventListFragment();
         mapDispFragment = new MapDispFragment();
         eventDetailsFragment = new EventDetailsFragment();
-
+        edDate.setOnClickListener(this);
         progressBar.bringToFront();
         progressBar.setVisibility(View.VISIBLE);
+
+        fromDatepickerdialog = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, day);
+
+                edDate.setText(new StringBuilder().append(day + "/")
+                        .append(month + 1 + "/").append(year));
+            }
+        };
+
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_eventList, eventListFragment);
         transaction.add(R.id.frame_Details, eventDetailsFragment);
@@ -220,6 +256,14 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                     }
                 }
                 break;
+            case R.id.event_menuadd:
+                Intent addNewIntent = new Intent(EventListActivity.this, AddActivity.class);
+                startActivity(addNewIntent);
+                break;
+            case R.id.event_menufilter:
+                Intent settingsIntent = new Intent(EventListActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -234,6 +278,12 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.btnSearch:
                 animatePanel(2);
+                break;
+            case R.id.srch_Date:
+                new DatePickerDialog(EventListActivity.this, fromDatepickerdialog,
+                        calendar.get(Calendar.YEAR), calendar
+                        .get(Calendar.MONTH), calendar
+                        .get(Calendar.DAY_OF_MONTH)).show();
                 break;
 
         }

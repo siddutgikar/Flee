@@ -52,35 +52,72 @@
         android:padding="5dp"
         android:visibility="gone">
 
-        <Spinner
-            android:id="@+id/srch_Category"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/categoryArray"
-            android:entryValues="@array/categoryIDArray"></Spinner>
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-        <EditText
-            android:id="@+id/srch_Location"
+            <Spinner
+                android:id="@+id/srch_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/share_button_selector5"
+                android:entries="@array/categoryArray"
+                android:entryValues="@array/categoryIDArray"
+                android:padding="10dp">
+
+            </Spinner>
+
+            <EditText
+                android:id="@+id/srch_Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/share_button_selector5"
+                android:hint="Search by location"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search by location" />
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-        <EditText
-            android:id="@+id/srch_Date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            <TextView
+                android:id="@+id/srch_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/share_button_selector5"
+                android:hint="Search by Date"
+                android:padding="10dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/darker_gray"></View>
+            </TextView>
 
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Search" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right|center">
+
+                <Button
+                    android:background="@drawable/share_button_selector"
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <ProgressBar
