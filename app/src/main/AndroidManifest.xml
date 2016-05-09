@@ -31,7 +31,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>  
 
         </activity>
         <activity
@@ -48,7 +48,9 @@
         </activity>
         <activity
             android:name=".AddActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
         <activity
             android:name=".SignupActivity"
             android:screenOrientation="landscape"
