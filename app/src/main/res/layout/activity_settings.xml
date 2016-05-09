@@ -5,142 +5,302 @@
     android:background="@color/colorYellow"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/categories"
+        android:paddingTop="10dp"/>
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:fontFamily="sans-serif-black"
         android:gravity="center_horizontal"
-        android:textSize="25sp"
         android:text="@string/select_category"
-        android:fontFamily="sans-serif-black" />
+        android:paddingTop="10dp"
+        android:textSize="25sp" />
 
     <!--   Customized Checkboxes  -->
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox
-                android:id="@+id/checkBoxCustomized11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_11" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_12" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_13" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_14" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_15" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_16" />
-        </TableRow>
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox
-                android:id="@+id/checkBoxCustomized21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_21" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_22" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_23" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_24" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_25" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_26" />
-        </TableRow>
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox
-                android:id="@+id/checkBoxCustomized31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_31" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized32"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_32" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized33"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_33" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized34"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_34" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_35" />
-            <CheckBox
-                android:id="@+id/checkBoxCustomized36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:button="@drawable/settings_checkbox_36" />
-        </TableRow>
-    </TableLayout>
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search"
-        android:gravity="center_horizontal"
-        />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized11"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_11"
+                android:checked="false" />
+
+            <ToggleButton
+                android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized12"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_12"/>
+
+            <ToggleButton
+                android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized13"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_13"/>
+
+            <ToggleButton
+                android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized14"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_14"/>
+
+            <ToggleButton
+                android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized15"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_15"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized16"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_16"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized21"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_21"
+                android:checked="false" />
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized22"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_22"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized23"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_23"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized24"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_24"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized25"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_25"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized26"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_26"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized31"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_31"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized32"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_32"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized33"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_33"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized34"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_34"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized35"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_35"/>
+
+            <ToggleButton android:layout_margin="5dp"
+                android:id="@+id/toggleCustomized36"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:button="@null"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/settings_checkbox_36"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+
+            <EditText
+                android:id="@+id/editTextLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance"
+                android:paddingLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/textViewSeekbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"/>
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="500dp"
+        android:paddingRight="500dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            android:id="@+id/finishButtonCategory"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/share_button_selector4"
+            android:focusableInTouchMode="false"
+            android:textColor="#FFFFFF"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"/>
+    </LinearLayout>
+
 
 </LinearLayout>
