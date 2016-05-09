@@ -36,4 +36,23 @@ public class Constants {
 
     public static  String ERROR_MSG="Oops ! Something went wong. Try again later.";
 
+    public static final String CATEGORY_PREFS = "CategoryPrefsFile";
+
+    public static final String CATEGORY = "category";
+
+    public static final String LOCATION = "location";
+
+    public static final String LATITUDE = "latitude";
+
+    public static final String LONGITUDE = "longitude";
+
+    public static final String ZIPCODE = "zipcode";
+
+    public static final String DISTANCE = "distance";
+
+
+
+
+
+
 }
