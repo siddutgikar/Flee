@@ -42,7 +42,9 @@
             android:name=".LoginActivity"
             android:label="Login"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
 
         </activity>
         <activity
@@ -59,7 +61,10 @@
             android:name=".SignupActivity"
             android:screenOrientation="landscape"
             android:label="@string/title_activity_signup"
-            android:theme="@android:style/Theme.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
     </application>
 
 </manifest>
