@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -31,6 +33,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.mobilecomputing.flee.flee.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +53,8 @@ public class LoginActivity extends Activity
     private Button mCallApiButton;
     private Button mLoginButton;
     private Button mSignupButton;
+    private TextView mtermsButton;
+    private TextView mforgotButton;
     private TextView mUsername;
     private TextView mPassword;
 
@@ -71,6 +76,11 @@ public class LoginActivity extends Activity
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Book.ttf");
 
+        mforgotButton = (TextView) findViewById(R.id.termsConditions);
+        mforgotButton.setTypeface(font);
+        mtermsButton = (TextView) findViewById(R.id.forgotPassword);
+        mtermsButton.setTypeface(font);
+
         mUsername = (TextView) findViewById(R.id.userText);
         mUsername.setTypeface(font);
         mPassword = (TextView) findViewById(R.id.passwordText);
@@ -81,8 +91,23 @@ public class LoginActivity extends Activity
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
-                startActivity(myIntent);
+                if(mUsername.getText().toString().toLowerCase().equals("fleeuser")) {
+                   if(mPassword.getText().toString().equals("12345"))
+                   {
+                       Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
+                       startActivity(myIntent);
+                   } else{
+                       Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username/Password!", Toast.LENGTH_SHORT);
+                       toast.setGravity(Gravity.CENTER, 0, 0);
+                       toast.show();
+                   }
+                }else{
+                    Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username/Password!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
+
             }
         });
 
@@ -116,6 +141,23 @@ public class LoginActivity extends Activity
                 (getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());*/
 
+        mtermsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(LoginActivity.this, Constants.FEATURE_NOT_IMPLEMENTED, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
+
+        mforgotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(LoginActivity.this, Constants.FEATURE_NOT_IMPLEMENTED, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
     }
 
     private void getResultsFromApi() {

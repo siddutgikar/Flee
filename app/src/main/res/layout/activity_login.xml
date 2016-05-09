@@ -5,85 +5,133 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    android:paddingLeft="85dp"
-    android:paddingRight="85dp"
+    android:paddingLeft="100dp"
+    android:paddingRight="100dp"
     android:background="#E37245">
 
-    <ImageView
-        android:layout_marginBottom="10dp"
-        android:id="@+id/imgMap"
-        android:layout_width="155dp"
-        android:layout_height="73dp"
-        android:src="@drawable/flee_small"
-        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/imgMap"
+            android:layout_width="155dp"
+            android:layout_height="73dp"
+            android:src="@drawable/flee_small"
+            android:layout_gravity="center_horizontal" />
 
 
-    <EditText
-        android:layout_marginBottom="10dp"
+        <EditText
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userText"
+            android:layout_gravity="center_horizontal"
+            android:hint="Email or Username"
+            android:gravity="center_horizontal"
+            android:background="@drawable/share_button_selector5"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+
+        <EditText
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordText"
+            android:layout_gravity="center_horizontal"
+            android:hint="Password"
+            android:gravity="center_horizontal"
+            android:background="@drawable/share_button_selector5"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:id="@+id/loginButton"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/share_button_selector3"
+            android:focusableInTouchMode="false"
+            android:textColor="#FFFFFF"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"/>
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SIGN UP"
+            android:id="@+id/signupButton"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/share_button_selector"
+            android:textColor="#FFFFFF"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"/>
+
+        <Button
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log in with Google"
+            android:id="@+id/apiLoginButton"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/share_button_selector2"
+            android:textColor="#FFFFFF"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/userText"
-        android:layout_gravity="center_horizontal"
-        android:hint="Email or Username"
-        android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+        android:gravity="center|bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        >
 
-    <EditText
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordText"
-        android:layout_gravity="center_horizontal"
-        android:hint="Password"
-        android:gravity="center_horizontal"
-        android:background="@drawable/share_button_selector5"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot your password?"
+            android:id="@+id/forgotPassword"
 
-    <Button
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:id="@+id/loginButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/share_button_selector3"
-        android:focusableInTouchMode="false"
-        android:textColor="#FFFFFF"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"/>
+            android:textColor="#FFFFFF"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:background="@android:color/transparent" />
 
-    <Button
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SIGN UP"
-        android:id="@+id/signupButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/share_button_selector"
-        android:textColor="#FFFFFF"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms and Agreement"
+            android:id="@+id/termsConditions"
+            android:textColor="#FFFFFF"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:background="@android:color/transparent" />
 
-    <Button
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log in with Google"
-        android:id="@+id/apiLoginButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/share_button_selector2"
-        android:textColor="#FFFFFF"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"/>
+    </LinearLayout>
 </LinearLayout>
+

@@ -32,6 +32,7 @@ public class SignupActivity extends Activity {
         mLastName.setTypeface(font);
         mUsername.setTypeface(font);
         mFinishButton.setTypeface(font);
+        mPassword.setTypeface(font);
 
         mFinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
