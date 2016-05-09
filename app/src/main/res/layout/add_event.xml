@@ -170,46 +170,107 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="850dp" />
 
-    <!--
-    <ImageView
+
+    <FrameLayout
+        android:id="@+id/framePurple"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:id="@+id/purpleDot"
-        android:src="#744c9b"
         android:layout_below="@+id/uploadImageButton"
-        android:layout_toStartOf="@+id/textViewDescr" />
+        android:layout_marginStart="210dp">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/purpleDot"
+            android:src="#744c9b" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropPurple"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameBlue"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/textViewLocation"
+        android:layout_alignEnd="@+id/framePurple">
 
     <ImageView
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:id="@+id/blueDot"
-        android:src="#65c0ad"
-        android:layout_alignTop="@+id/textViewLocation"
-        android:layout_alignEnd="@+id/purpleDot" />
+        android:src="#65c0ad" />
 
-    <ImageView
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropBlue"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameRed"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:id="@+id/redDot"
         android:layout_alignTop="@+id/textViewDate"
-        android:layout_alignEnd="@+id/purpleDot"
-        android:src="#E37245" />
+        android:layout_alignEnd="@+id/framePurple">
 
-    <ImageView
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/redDot"
+            android:src="#E37245" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropRed"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameRed2"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:id="@+id/redDot2"
         android:layout_alignTop="@+id/textViewTime"
-        android:layout_alignEnd="@+id/purpleDot"
-        android:src="#E37245" />
+        android:layout_alignEnd="@+id/framePurple">
 
-    <ImageView
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/redDot2"
+            android:src="#E37245" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropRed2"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameYellow"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:id="@+id/yellowDot"
         android:layout_alignTop="@+id/textViewCategory"
-        android:layout_alignEnd="@+id/purpleDot"
+        android:layout_alignEnd="@+id/framePurple">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/yellowDot"
         android:src="#FFC62C" />
-        -->
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropYellow"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
 
 </RelativeLayout>
