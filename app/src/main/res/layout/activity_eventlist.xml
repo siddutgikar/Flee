@@ -28,10 +28,10 @@
     </LinearLayout>
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/frame_Details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
     </FrameLayout>
 
@@ -47,7 +47,7 @@
         android:id="@+id/searchPanelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B3FFFFFF"
+        android:background="#CC65C0AD"
         android:orientation="vertical"
         android:padding="5dp"
         android:visibility="gone">
@@ -56,7 +56,8 @@
             android:id="@+id/srch_Category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/categoryArray"></Spinner>
+            android:entries="@array/categoryArray"
+            android:entryValues="@array/categoryIDArray"></Spinner>
 
         <EditText
             android:id="@+id/srch_Location"
@@ -82,4 +83,11 @@
             android:text="Search" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true" />
 </RelativeLayout>
