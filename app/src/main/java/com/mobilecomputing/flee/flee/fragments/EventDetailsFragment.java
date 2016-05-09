@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.mobilecomputing.flee.flee.R;
 import com.mobilecomputing.flee.flee.data.EventBean;
+import com.mobilecomputing.flee.flee.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -32,12 +33,21 @@ import java.text.SimpleDateFormat;
 /**
  * Created by siddh on 5/7/2016.
  */
-public class EventDetailsFragment extends Fragment implements View.OnClickListener {
+public class EventDetailsFragment extends Fragment implements View.OnClickListener, LocationListener {
 
+    /**
+     * Text view objects to be used for displaying the data
+     */
     TextView tv_Title, tv_Address_Label, tv_Address_value, tv_Desc_Label, tv_Desc_value, tv_Distance, tv_Time;
 
+    /**
+     * Image view object for displaying the map
+     */
     ImageView imgView;
 
+    /**
+     * Image button for the share option
+     */
     ImageButton btnShare;
 
     int width = 401;
@@ -47,6 +57,11 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
     double eventLat = 0.0;
     double eventLng = 0.0;
 
+    LocationManager locationManager_;
+
+    /**
+     * Event Bean for the received object
+     */
     EventBean _eventBean;
 
     @Override
@@ -75,67 +90,81 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
      */
 
     private void initView(View v) {
-
-        tv_Title = (TextView) v.findViewById(R.id.tv_title);
-        tv_Address_Label = (TextView) v.findViewById(R.id.tv_address_header);
-        tv_Address_value = (TextView) v.findViewById(R.id.tv_address_details);
-        tv_Desc_Label = (TextView) v.findViewById(R.id.tv_desc_header);
-        tv_Desc_value = (TextView) v.findViewById(R.id.tv_desc_details);
-        tv_Distance = (TextView) v.findViewById(R.id.tv_Distance_details);
-        tv_Time = (TextView) v.findViewById(R.id.tv_Time_details);
-        imgView = (ImageView) v.findViewById(R.id.imgMap);
-        btnShare = (ImageButton) v.findViewById(R.id.btnShare);
-        Typeface fedraSansStdBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/FedraSansStd-Bold.ttf");
-        Typeface fedraSansStdBook = Typeface.createFromAsset(getActivity().getAssets(), "fonts/FedraSansStd-Book.ttf");
-        tv_Title.setTypeface(fedraSansStdBold);
-        tv_Address_Label.setTypeface(fedraSansStdBold);
-        tv_Address_value.setTypeface(fedraSansStdBook);
-        tv_Desc_Label.setTypeface(fedraSansStdBold);
-        tv_Desc_value.setTypeface(fedraSansStdBook);
-        tv_Distance.setTypeface(fedraSansStdBook);
-        tv_Time.setTypeface(fedraSansStdBook);
-        imgView.setOnClickListener(this);
-        btnShare.setOnClickListener(this);
+        try {
+            tv_Title = (TextView) v.findViewById(R.id.tv_title);
+            tv_Address_Label = (TextView) v.findViewById(R.id.tv_address_header);
+            tv_Address_value = (TextView) v.findViewById(R.id.tv_address_details);
+            tv_Desc_Label = (TextView) v.findViewById(R.id.tv_desc_header);
+            tv_Desc_value = (TextView) v.findViewById(R.id.tv_desc_details);
+            tv_Distance = (TextView) v.findViewById(R.id.tv_Distance_details);
+            tv_Time = (TextView) v.findViewById(R.id.tv_Time_details);
+            imgView = (ImageView) v.findViewById(R.id.imgMap);
+            btnShare = (ImageButton) v.findViewById(R.id.btnShare);
+            Typeface fedraSansStdBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/FedraSansStd-Bold.ttf");
+            Typeface fedraSansStdBook = Typeface.createFromAsset(getActivity().getAssets(), "fonts/FedraSansStd-Book.ttf");
+            tv_Title.setTypeface(fedraSansStdBold);
+            tv_Address_Label.setTypeface(fedraSansStdBold);
+            tv_Address_value.setTypeface(fedraSansStdBook);
+            tv_Desc_Label.setTypeface(fedraSansStdBold);
+            tv_Desc_value.setTypeface(fedraSansStdBook);
+            tv_Distance.setTypeface(fedraSansStdBook);
+            tv_Time.setTypeface(fedraSansStdBook);
+            imgView.setOnClickListener(this);
+            btnShare.setOnClickListener(this);
+        } catch (Exception ex) {
+            Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
+            Log.e("Event Details Init View", ex.toString());
+        }
     }
 
-
+    /**
+     * The method will Set All the details of the event on the screen
+     *
+     * @param eventBean
+     */
     public void setEventDetails(EventBean eventBean) {
-        _eventBean = eventBean;
-        if (eventBean != null) {
+        try {
+            _eventBean = eventBean;
+            if (eventBean != null) {
 
-            if (imgView.getWidth() != 0) {
-                width = imgView.getWidth();
-            }
-            if (imgView.getHeight() != 0) {
-                height = imgView.getHeight();
-            }
-            String distance = eventBean.getDistance();
-            tv_Distance.setText(distance.substring(0, distance.indexOf('.')) + " mi");
-            long time = eventBean.getTime();
-            if (time > 0) {
-                String date = new SimpleDateFormat("dd MMM hh:mm a")
-                        .format(new java.util.Date(time * 1000));
-                tv_Time.setText(date);
+                if (imgView.getWidth() != 0) {
+                    width = imgView.getWidth();
+                }
+                if (imgView.getHeight() != 0) {
+                    height = imgView.getHeight();
+                }
+                String distance = eventBean.getDistance();
+                tv_Distance.setText(distance.substring(0, distance.indexOf('.')) + " mi");
+                long time = eventBean.getTime();
+                if (time > 0) {
+                    String date = new SimpleDateFormat("dd MMM hh:mm a")
+                            .format(new java.util.Date(time * 1000));
+                    tv_Time.setText(date);
+                } else {
+                    tv_Time.setText("soon...");
+                }
+                tv_Title.setText(eventBean.getName());
+                tv_Address_value.setText(eventBean.getAddress());
+                if (eventBean.getDescription() != null) {
+                    tv_Desc_value.setText(Html.fromHtml(eventBean.getDescription()));
+                }
+                double lat = eventBean.getLatitude();
+                double lng = eventBean.getLongitude();
+
+                if (lat != 0.0 && lng != 0.0) {
+                    eventLat = lat;
+                    eventLng = lng;
+                    String image_url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lng + "&zoom=12&size=" + width + "x" + height + "&sensor=false";
+                    Log.d("MapsImage UR", image_url);
+                    Picasso.with(getActivity()).load(image_url).fit().into(imgView);
+                }
             } else {
-                tv_Time.setText("soon...");
+                Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             }
-            tv_Title.setText(eventBean.getName());
-            tv_Address_value.setText(eventBean.getAddress());
-            if (eventBean.getDescription() != null) {
-                tv_Desc_value.setText(Html.fromHtml(eventBean.getDescription()));
-            }
-            double lat = eventBean.getLatitude();
-            double lng = eventBean.getLongitude();
-
-            if (lat != 0.0 && lng != 0.0) {
-                eventLat = lat;
-                eventLng = lng;
-                String image_url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lng + "&zoom=12&size=" + width + "x" + height + "&sensor=false";
-                Log.d("MapsImage UR", image_url);
-                Picasso.with(getActivity()).load(image_url).fit().into(imgView);
-            }
+        } catch (Exception ex) {
+            Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
+            Log.e("EVENT Details Error", ex.toString());
         }
-
     }
 
 
@@ -146,20 +175,26 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                 startMapApp();
                 break;
             case R.id.btnShare:
+                try {
+                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                    sharingIntent.setType("text/html");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<h1>" + _eventBean.getName() + "</h1><div>" + _eventBean.getAddress() + "</div><div>" + _eventBean.getUrl() + "</div>"));
+                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                }
+                catch(Exception ex)
+                {
 
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/html");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<h1>" + _eventBean.getName() + "</h1><div>" + _eventBean.getAddress() + "</div><div>" + _eventBean.getUrl() + "</div>"));
-                startActivity(Intent.createChooser(sharingIntent, "Share using"));
-
+                }
                 break;
         }
     }
 
-
+    /**
+     * THis Method will find the current location of the
+     */
     private void startMapApp() {
         try {
-            LocationManager locationManager_ = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager_ = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             if (locationManager_ != null) {
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -174,45 +209,60 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                         startActivity(i);
                     }
                 } else {
-                    locationManager_.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            if (location != null) {
-                                currentLat = location.getLatitude();
-                                currentLng = location.getLongitude();
-                                if (currentLat != 0.0 && currentLng != 0.0 && eventLat != 0.0 && eventLng != 0.0) {
-                                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                                            Uri.parse("http://maps.google.com/maps?saddr=" + currentLat + "," + currentLng + "&daddr=" + eventLat + "," + eventLng));
-                                    startActivity(intent);
-                                } else if (eventLat != 0.0 && eventLng != 0.0) {
-                                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:37.827500,-122.481670"));
-                                    startActivity(i);
-                                } else {
-                                    Toast.makeText(getActivity(), "Location cannot be determined", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                        }
-
-                        @Override
-                        public void onProviderEnabled(String provider) {
-
-                        }
-
-                        @Override
-                        public void onProviderDisabled(String provider) {
-
-                        }
-                    });
+                    locationManager_.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, EventDetailsFragment.this);
                 }
+            } else {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + eventLat + "," + eventLng));
+                startActivity(i);
             }
 
         } catch (Exception ex) {
+            Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             Log.e("Event Details Fragment", ex.toString());
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            currentLat = location.getLatitude();
+            currentLng = location.getLongitude();
+            if (currentLat != 0.0 && currentLng != 0.0 && eventLat != 0.0 && eventLng != 0.0) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr=" + currentLat + "," + currentLng + "&daddr=" + eventLat + "," + eventLng));
+                startActivity(intent);
+            } else if (eventLat != 0.0 && eventLng != 0.0) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + eventLat + "," + eventLng));
+                startActivity(i);
+            } else {
+                Toast.makeText(getActivity(), "Location cannot be determined", Toast.LENGTH_LONG).show();
+            }
+        }
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager_.removeUpdates(EventDetailsFragment.this);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.mobilecomputing.flee.flee.data.EventBean;
@@ -89,6 +90,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     LinearLayout lnFrameContainer;
 
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,10 +113,13 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         edLocation = (EditText) findViewById(R.id.srch_Location);
         edDate = (EditText) findViewById(R.id.srch_Date);
         spnCategory = (Spinner) findViewById(R.id.srch_Category);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         eventListFragment = new EventListFragment();
         mapDispFragment = new MapDispFragment();
         eventDetailsFragment = new EventDetailsFragment();
+
+        progressBar.bringToFront();
+        progressBar.setVisibility(View.VISIBLE);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_eventList, eventListFragment);
         transaction.add(R.id.frame_Details, eventDetailsFragment);
@@ -179,7 +184,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                 detailsLayout.startAnimation(transIn_Right);
                 detailsLayout.setVisibility(View.VISIBLE);
 
-               // lnFrameContainer.bringToFront();
+                // lnFrameContainer.bringToFront();
                 lnFrameContainer.clearAnimation();
                 lnFrameContainer.setAnimation(transIn_Left);
                 lnFrameContainer.startAnimation(transIn_Left);
@@ -278,7 +283,11 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        if (detailsLayout.getVisibility() == View.VISIBLE) {
+        if (isSearchPanelVisible) {
+            if (!isAnimating) {
+                animatePanel(2);
+            }
+        } else if (detailsLayout.getVisibility() == View.VISIBLE) {
             if (!isAnimating) {
                 animatePanel(4);
             }
@@ -319,6 +328,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             prepareUrl();
         }
 
@@ -347,6 +357,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressBar.setVisibility(View.INVISIBLE);
             try {
                 if (s != null && s.length() > 0) {
 

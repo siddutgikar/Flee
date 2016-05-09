@@ -34,4 +34,6 @@ public class Constants {
 
     public static String QUERY_TIME = "&time=";
 
+    public static  String ERROR_MSG="Oops ! Something went wong. Try again later.";
+
 }
