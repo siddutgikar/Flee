@@ -2,12 +2,44 @@
 <resources>
 
     <string-array name="categoryArray">
-        <item>Cat 1</item>
-        <item>Cat 2</item>
-        <item>Cat 3</item>
-        <item>Cat 4</item>
-        <item>Cat 5</item>
+        <item>Writing</item>
+        <item>Sports</item>
+        <item>Religion</item>
+        <item>Politics</item>
+        <item>Pets</item>
+        <item>Outdoor</item>
+        <item>Nightlife</item>
+        <item>Music</item>
+        <item>Movies</item>
+        <item>Games</item>
+        <item>Food</item>
+        <item>Fitness</item>
+        <item>Fashion</item>
+        <item>Family</item>
+        <item>Education</item>
+        <item>Community</item>
+        <item>Career</item>
+        <item>Art&amp;Craft</item>
     </string-array>
-
+    <string-array name="categoryIDArray">
+        <item>36</item>
+        <item>32</item>
+        <item>28</item>
+        <item>13</item>
+        <item>26</item>
+        <item>23</item>
+        <item>31</item>
+        <item>21</item>
+        <item>20</item>
+        <item>11</item>
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>Family</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+        <item>15</item>
+    </string-array>
 
 </resources>

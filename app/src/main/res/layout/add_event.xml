@@ -12,13 +12,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ADD EVENT"
         android:id="@+id/textViewAddEvent"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textColor="#65BFAC"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="215dp" />
+        android:layout_marginStart="250dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/nameTextField"
-        android:layout_alignTop="@+id/textViewEventName"
+        android:layout_below="@+id/uploadImageButton"
         android:layout_toEndOf="@+id/textViewAddEvent" />
 
     <EditText
@@ -47,7 +47,7 @@
         android:ems="10"
         android:id="@+id/locationTextField"
         android:layout_below="@+id/nameTextField"
-        android:layout_alignEnd="@+id/nameTextField" />
+        android:layout_alignStart="@+id/nameTextField" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -129,18 +129,18 @@
         android:textStyle="bold"
         android:textColor="#000000"
         android:layout_below="@+id/categoryTextField"
-        android:layout_alignStart="@+id/textViewCategory" />
+        android:layout_alignEnd="@+id/textViewEventName" />
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/descrTextField"
+        android:background="@drawable/edittext_border"
         android:layout_below="@+id/textViewDescr"
         android:layout_alignStart="@+id/textViewDescr"
-        android:layout_marginTop="58dp"
-        android:layout_alignEnd="@+id/categoryTextField" />
+        android:layout_alignEnd="@+id/nameTextField" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -159,5 +159,118 @@
         android:background="#0000"
         android:layout_alignTop="@+id/textViewAddEvent"
         android:layout_alignEnd="@+id/descrTextField" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/backButton"
+        android:src="@drawable/back_arrow"
+        android:background="#0000"
+        android:layout_alignBottom="@+id/doneButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="850dp" />
+
+
+    <FrameLayout
+        android:id="@+id/framePurple"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_below="@+id/uploadImageButton"
+        android:layout_marginStart="210dp">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/purpleDot"
+            android:src="#744c9b" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropPurple"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameBlue"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/textViewLocation"
+        android:layout_alignEnd="@+id/framePurple">
+
+    <ImageView
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:id="@+id/blueDot"
+        android:src="#65c0ad" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropBlue"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameRed"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/textViewDate"
+        android:layout_alignEnd="@+id/framePurple">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/redDot"
+            android:src="#E37245" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropRed"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameRed2"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/textViewTime"
+        android:layout_alignEnd="@+id/framePurple">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/redDot2"
+            android:src="#E37245" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropRed2"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameYellow"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignTop="@+id/textViewCategory"
+        android:layout_alignEnd="@+id/framePurple">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/yellowDot"
+        android:src="#FFC62C" />
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/circleCropYellow"
+            android:src="@drawable/circle" />
+    </FrameLayout>
+
 
 </RelativeLayout>
