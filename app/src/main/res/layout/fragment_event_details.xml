@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-
     android:orientation="horizontal">
 
     <LinearLayout
@@ -18,7 +17,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:contentDescription="Not available."
-            android:src="@drawable/flee_small" />
+            android:src="@drawable/flee_broken" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +49,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/share_button_selector"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_share"
+                android:src="@drawable/img_share"
                 android:text="Share" />
         </LinearLayout>
 
@@ -119,7 +118,6 @@
                 android:id="@+id/tv_desc_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:clickable="true"
                 android:text="Address" />
 

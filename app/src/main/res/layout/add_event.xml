@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+ <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/mainView"
+    android:layout_height="fill_parent"
+    android:layout_width = "fill_parent" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
 
     tools:context="com.mobilecomputing.flee.flee.AddActivity">
 
@@ -15,10 +34,9 @@
         android:textSize="30sp"
         android:textColor="#65BFAC"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="250dp" />
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,10 +44,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="EVENT NAME"
         android:id="@+id/textViewEventName"
-        android:layout_below="@+id/uploadImageButton"
-        android:layout_alignStart="@+id/textViewAddEvent"
         android:textStyle="bold"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignTop="@+id/nameTextField"
+        android:layout_toEndOf="@+id/framePurple" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -37,7 +55,7 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/nameTextField"
-        android:layout_below="@+id/uploadImageButton"
+        android:layout_alignTop="@+id/framePurple"
         android:layout_toEndOf="@+id/textViewAddEvent" />
 
     <EditText
@@ -47,7 +65,7 @@
         android:ems="10"
         android:id="@+id/locationTextField"
         android:layout_below="@+id/nameTextField"
-        android:layout_alignStart="@+id/nameTextField" />
+        android:layout_toEndOf="@+id/textViewTime" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -128,8 +146,9 @@
         android:id="@+id/textViewDescr"
         android:textStyle="bold"
         android:textColor="#000000"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/categoryTextField"
-        android:layout_alignEnd="@+id/textViewEventName" />
+        android:layout_alignEnd="@+id/textViewCategory" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -158,25 +177,14 @@
         android:src="@drawable/uploadeventphoto"
         android:background="#0000"
         android:layout_alignTop="@+id/textViewAddEvent"
-        android:layout_alignEnd="@+id/descrTextField" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/backButton"
-        android:src="@drawable/back_arrow"
-        android:background="#0000"
-        android:layout_alignBottom="@+id/doneButton"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="850dp" />
-
+        android:layout_alignEnd="@+id/doneButton" />
 
     <FrameLayout
         android:id="@+id/framePurple"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_below="@+id/uploadImageButton"
-        android:layout_marginStart="210dp">
+        android:layout_marginTop="170dp"
+        android:layout_alignStart="@+id/textViewAddEvent">
 
         <ImageView
             android:layout_width="30sp"
@@ -272,5 +280,21 @@
             android:src="@drawable/circle" />
     </FrameLayout>
 
+</RelativeLayout>
+
+    </LinearLayout>
+
+ </ScrollView>
+
+<ImageButton
+    android:layout_width="50sp"
+    android:layout_height="50sp"
+    android:id="@+id/backButton"
+    android:src="@drawable/back_arrow"
+    android:background="#0000"
+    android:layout_marginEnd="66dp"
+    android:layout_marginBottom="60dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.mobilecomputing.flee.flee.R;
 import com.mobilecomputing.flee.flee.data.EventBean;
+import com.mobilecomputing.flee.flee.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -74,9 +77,9 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     public void plotMarkers() {
         if (googleMap != null && _eventList != null && _eventList.size() > 0) {
+            googleMap.clear();
             IconGenerator myFactory = new IconGenerator(getActivity());
             LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
             for (int i = 0; i < _eventList.size(); i++) {
@@ -128,30 +131,40 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
 
 
     public void setLocationFocus(EventBean selectedBean) {
+        try {
+            if (selectedBean != null && googleMap != null) {
+                double lat = selectedBean.getLatitude();
+                double lng = selectedBean.getLongitude();
+                if (lat != 0.0 && lng != 0.0) {
+                    LatLng latLng = new LatLng(lat, lng);
+                    Animation = CameraUpdateFactory.newLatLng(latLng);
+                    zoomLevel = CameraUpdateFactory.zoomTo(8);
+                    googleMap.animateCamera(zoomLevel, 1000, new GoogleMap.CancelableCallback() {
+                        @Override
+                        public void onFinish() {
+                            zoomLevel = CameraUpdateFactory.zoomTo(12);
+                            googleMap.moveCamera(Animation);
+                            googleMap.animateCamera(zoomLevel, 1000, null);
+                        }
 
-        if (selectedBean != null && googleMap != null) {
-            double lat = selectedBean.getLatitude();
-            double lng = selectedBean.getLongitude();
-            if (lat != 0.0 && lng != 0.0) {
-                LatLng latLng = new LatLng(lat, lng);
-                Animation = CameraUpdateFactory.newLatLng(latLng);
-                zoomLevel = CameraUpdateFactory.zoomTo(8);
-                googleMap.animateCamera(zoomLevel, 1000, new GoogleMap.CancelableCallback() {
-                    @Override
-                    public void onFinish() {
-                        zoomLevel = CameraUpdateFactory.zoomTo(12);
-                        googleMap.moveCamera(Animation);
-                        googleMap.animateCamera(zoomLevel, 1000, null);
-                    }
+                        @Override
+                        public void onCancel() {
 
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
+                        }
+                    });
 
 
+                } else {
+                    Toast.makeText(getActivity(), "Location not available.", Toast.LENGTH_LONG).show();
+                }
+
+            } else {
+                Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             }
+
+        } catch (Exception ex) {
+            Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
+            Log.e("Set Focus", ex.toString());
         }
     }
 

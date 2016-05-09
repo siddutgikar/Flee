@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="categoryArray">
+        <item>Select</item>
         <item>Writing</item>
         <item>Sports</item>
         <item>Religion</item>
@@ -22,6 +23,7 @@
         <item>Art&amp;Craft</item>
     </string-array>
     <string-array name="categoryIDArray">
+        <item>0</item>
         <item>36</item>
         <item>32</item>
         <item>28</item>
@@ -35,7 +37,7 @@
         <item>10</item>
         <item>9</item>
         <item>8</item>
-        <item>Family</item>
+        <item>25</item>
         <item>6</item>
         <item>4</item>
         <item>2</item>

@@ -64,6 +64,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
      */
     EventBean _eventBean;
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -151,17 +152,28 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                 double lat = eventBean.getLatitude();
                 double lng = eventBean.getLongitude();
 
+                ViewGroup.LayoutParams params = imgView.getLayoutParams();
+
                 if (lat != 0.0 && lng != 0.0) {
+                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
                     eventLat = lat;
                     eventLng = lng;
                     String image_url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lng + "&zoom=12&size=" + width + "x" + height + "&sensor=false";
                     Log.d("MapsImage UR", image_url);
-                    Picasso.with(getActivity()).load(image_url).fit().into(imgView);
+                    Picasso.with(getActivity()).load(image_url).fit().error(getActivity().getResources().getDrawable(R.drawable.flee_broken)).into(imgView);
+                } else {
+                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    imgView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.flee_broken));
                 }
             } else {
+                Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
+
                 Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
+            Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
             Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             Log.e("EVENT Details Error", ex.toString());
         }
@@ -180,9 +192,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                     sharingIntent.setType("text/html");
                     sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<h1>" + _eventBean.getName() + "</h1><div>" + _eventBean.getAddress() + "</div><div>" + _eventBean.getUrl() + "</div>"));
                     startActivity(Intent.createChooser(sharingIntent, "Share using"));
-                }
-                catch(Exception ex)
-                {
+                } catch (Exception ex) {
 
                 }
                 break;
@@ -197,13 +207,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
             locationManager_ = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             if (locationManager_ != null) {
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     if (eventLat != 0.0 && eventLng != 0.0) {
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:37.827500,-122.481670"));
                         startActivity(i);
@@ -239,13 +243,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
             }
         }
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         locationManager_.removeUpdates(EventDetailsFragment.this);
