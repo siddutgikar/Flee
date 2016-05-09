@@ -31,129 +31,130 @@ public class AddActivity extends Activity implements View.OnClickListener {
     private EditText name, location, date, time, category, description;
     private TextView nameLabel, locationLabel, dateLabel, timeLabel, categoryLabel, descrLabel, addEventLabel;
     private ImageButton uploadImage, done, backButton;
-    //private ImageView redCircle, redCircle2, yellowCircle, blueCircle, purpleCircle;
 
     private Uri selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_event);
 
-        //create the custom font
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Bold.ttf");
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.add_event);
 
-        //initialize textViews
-        addEventLabel = (TextView) findViewById(R.id.textViewAddEvent);
-        nameLabel = (TextView) findViewById(R.id.nameTextField);
-        locationLabel = (TextView) findViewById(R.id.locationTextField);
-        dateLabel = (TextView) findViewById(R.id.dateTextField);
-        timeLabel = (TextView) findViewById(R.id.timeTextField);
-        categoryLabel = (TextView) findViewById(R.id.categoryTextField);
-        descrLabel = (TextView) findViewById(R.id.descrTextField);
+            //create the custom font
+            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Bold.ttf");
 
-        //setting the font for the editTexts
-        addEventLabel.setTypeface(font);
-        nameLabel.setTypeface(font);
-        locationLabel.setTypeface(font);
-        dateLabel.setTypeface(font);
-        timeLabel.setTypeface(font);
-        categoryLabel.setTypeface(font);
-        descrLabel.setTypeface(font);
+            //initialize textViews
+            addEventLabel = (TextView) findViewById(R.id.textViewAddEvent);
+            nameLabel = (TextView) findViewById(R.id.nameTextField);
+            locationLabel = (TextView) findViewById(R.id.locationTextField);
+            dateLabel = (TextView) findViewById(R.id.dateTextField);
+            timeLabel = (TextView) findViewById(R.id.timeTextField);
+            categoryLabel = (TextView) findViewById(R.id.categoryTextField);
+            descrLabel = (TextView) findViewById(R.id.descrTextField);
 
-        //Just initializes the TextViews and buttons to be used for creating an event
-        name = (EditText) findViewById(R.id.nameTextField);
-        location = (EditText) findViewById(R.id.dateTextField);
-        date = (EditText) findViewById(R.id.timeTextField);
-        time = (EditText) findViewById(R.id.timeTextField);
-        category = (EditText) findViewById(R.id.categoryTextField);
-        description = (EditText) findViewById(R.id.descrTextField);
+            //setting the font for the editTexts
+            addEventLabel.setTypeface(font);
+            nameLabel.setTypeface(font);
+            locationLabel.setTypeface(font);
+            dateLabel.setTypeface(font);
+            timeLabel.setTypeface(font);
+            categoryLabel.setTypeface(font);
+            descrLabel.setTypeface(font);
 
-        uploadImage = (ImageButton) findViewById(R.id.uploadImageButton);
-        uploadImage.setOnClickListener(this);
+            //Just initializes the TextViews and buttons to be used for creating an event
+            name = (EditText) findViewById(R.id.nameTextField);
+            location = (EditText) findViewById(R.id.dateTextField);
+            date = (EditText) findViewById(R.id.timeTextField);
+            time = (EditText) findViewById(R.id.timeTextField);
+            category = (EditText) findViewById(R.id.categoryTextField);
+            description = (EditText) findViewById(R.id.descrTextField);
 
-        done = (ImageButton) findViewById(R.id.doneButton);
-        done.setOnClickListener(this);
+            uploadImage = (ImageButton) findViewById(R.id.uploadImageButton);
+            uploadImage.setOnClickListener(this);
 
-        backButton = (ImageButton) findViewById(R.id.backButton);
-        backButton.setOnClickListener(this);
+            done = (ImageButton) findViewById(R.id.doneButton);
+            done.setOnClickListener(this);
 
-
-        //makes the ImageViews in the shapes of circles
-        //redCircle = (ImageView) findViewById(R.id.redDot);
-        //redCircle.setBackground(createStateListDrawable());
+            backButton = (ImageButton) findViewById(R.id.backButton);
+            backButton.setOnClickListener(this);
+        }
+        catch (Exception e) {
+            Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
+            notification.show();
+        }
     }
 
-/*
-    private StateListDrawable createStateListDrawable() {
-        StateListDrawable drawable = new StateListDrawable();
-
-        OvalShape oval = new OvalShape();
-        oval.resize(30, 30);
-
-        ShapeDrawable shapeDrawable = new ShapeDrawable(oval);
-        shapeDrawable.getPaint().setColor(getResources().getColor(R.color.somecolor));
-        drawable.addState(new int[] { android.R.attr.state_pressed }, shapeDrawable);
-        drawable.addState(StateSet.WILD_CARD, shapeDrawable);
-
-        return drawable;
-    }*/
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
 
-            //go back to the previous activity
-            case R.id.backButton:
-                finish();
-                break;
+        try {
 
-            //select a photo from the android photo album
-            case R.id.uploadImageButton:
-                Intent photoPicker = new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                startActivityForResult(photoPicker, SELECT_PHOTO);
-                break;
+            switch (v.getId()) {
 
-            //create an event to add to the database
-            case R.id.doneButton:
+                //go back to the previous activity
+                case R.id.backButton:
+                    finish();
+                    break;
 
-                //gets the information the user entered in
-                String retrievedName = name.getText().toString();
-                String retrievedLocation = location.getText().toString();
-                String retrievedDate = date.getText().toString();
-                String retrievedTime = time.getText().toString();
-                String retrievedCategory = category.getText().toString();
-                String retrievedDescr = description.getText().toString();
+                //select a photo from the android photo album
+                case R.id.uploadImageButton:
+                    Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                    photoPicker.setType("image/*");
+                    startActivityForResult(photoPicker, SELECT_PHOTO);
+                    break;
 
-                //add the event to the list of events...
+                //create an event to add to the database
+                case R.id.doneButton:
 
-                Toast notification = Toast.makeText(this, "Event has been added", Toast.LENGTH_LONG);
-                notification.show();
+                    //gets the information the user entered in
+                    String retrievedName = name.getText().toString();
+                    String retrievedLocation = location.getText().toString();
+                    String retrievedDate = date.getText().toString();
+                    String retrievedTime = time.getText().toString();
+                    String retrievedCategory = category.getText().toString();
+                    String retrievedDescr = description.getText().toString();
 
+                    //add the event to the list of events...
 
-                //go to the EventList activity when the new event has been created
-                //Intent eventListIntent = new Intent(this, EventListActivity.class);
-                //eventListIntent.putExtra();
-                //startActivity(eventListIntent);
-                finish();
-                break;
+                    Toast notification = Toast.makeText(this, "Event has been added", Toast.LENGTH_LONG);
+                    notification.show();
+
+                    //go to the EventList activity when the new event has been created
+                    //Intent eventListIntent = new Intent(this, EventListActivity.class);
+                    //eventListIntent.putExtra();
+                    //startActivity(eventListIntent);
+                    finish();
+                    break;
+            }
+        }
+        catch (Exception e) {
+            Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
+            notification.show();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        super.onActivityResult(requestCode, resultCode, data);
+        try {
 
-        //records the URI for the selected image
-        if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
+            super.onActivityResult(requestCode, resultCode, data);
 
-            selectedImage = data.getData();
+            //records the URI for the selected image
+            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
 
-            //set the imageButton as the image selected by the user
-         //   uploadImage.setImageURI(null);
-         //   uploadImage.setImageURI(selectedImage);
+                selectedImage = data.getData();
+
+                //set the imageButton as the image selected by the user
+                //   uploadImage.setImageURI(null);
+                //   uploadImage.setImageURI(selectedImage);
+            }
+        }
+        catch (Exception e) {
+            Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
+            notification.show();
         }
     }
 }
