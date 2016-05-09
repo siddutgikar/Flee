@@ -5,16 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    android:paddingLeft="100dp"
-    android:paddingRight="100dp"
+    android:paddingLeft="@dimen/activity_login_padding"
+    android:paddingRight="@dimen/activity_login_padding"
     android:background="#E37245">
 
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:gravity="center">
+
+    <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical"
         android:orientation="vertical"
         >
 
@@ -24,7 +30,7 @@
             android:layout_width="155dp"
             android:layout_height="73dp"
             android:src="@drawable/flee_small"
-            android:layout_gravity="center_horizontal" />
+             />
 
 
         <EditText
@@ -32,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/userText"
-            android:layout_gravity="center_horizontal"
+
             android:hint="Email or Username"
             android:gravity="center_horizontal"
             android:background="@drawable/share_button_selector5"
@@ -46,7 +52,7 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordText"
-            android:layout_gravity="center_horizontal"
+
             android:hint="Password"
             android:gravity="center_horizontal"
             android:background="@drawable/share_button_selector5"
@@ -59,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="LOGIN"
             android:id="@+id/loginButton"
-            android:layout_gravity="center_horizontal"
+
             android:background="@drawable/share_button_selector3"
             android:focusableInTouchMode="false"
             android:textColor="#FFFFFF"
@@ -74,7 +80,7 @@
             android:layout_height="wrap_content"
             android:text="SIGN UP"
             android:id="@+id/signupButton"
-            android:layout_gravity="center_horizontal"
+
             android:background="@drawable/share_button_selector"
             android:textColor="#FFFFFF"
             android:paddingTop="10dp"
@@ -83,12 +89,11 @@
             android:paddingBottom="10dp"/>
 
         <Button
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Log in with Google"
             android:id="@+id/apiLoginButton"
-            android:layout_gravity="center_horizontal"
+
             android:background="@drawable/share_button_selector2"
             android:textColor="#FFFFFF"
             android:paddingTop="10dp"
@@ -97,14 +102,14 @@
             android:paddingBottom="10dp"/>
 
     </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|bottom"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_marginBottom="5dp"

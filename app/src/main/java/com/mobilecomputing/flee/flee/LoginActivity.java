@@ -30,6 +30,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
@@ -37,6 +38,7 @@ import com.mobilecomputing.flee.flee.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -96,13 +98,14 @@ public class LoginActivity extends Activity
                    {
                        Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
                        startActivity(myIntent);
+
                    } else{
-                       Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username/Password!", Toast.LENGTH_SHORT);
+                       Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username or Password!", Toast.LENGTH_SHORT);
                        toast.setGravity(Gravity.CENTER, 0, 0);
                        toast.show();
                    }
                 }else{
-                    Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username/Password!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username or Password!", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
@@ -118,6 +121,7 @@ public class LoginActivity extends Activity
             public void onClick(View v) {
                 Intent myIntent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(myIntent);
+
             }
         });
 
@@ -126,20 +130,12 @@ public class LoginActivity extends Activity
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*mCallApiButton.setEnabled(false);
+                mCallApiButton.setEnabled(false);
                 //mOutputText.setText("");
                 getResultsFromApi();
-                mCallApiButton.setEnabled(true);*/
-
-                Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
-                startActivity(myIntent);
+                mCallApiButton.setEnabled(true);
             }
         });
-
-        /*
-        mCredential = GoogleAccountCredential.usingOAuth2
-                (getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());*/
 
         mtermsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +154,11 @@ public class LoginActivity extends Activity
                 toast.show();
             }
         });
+
+        mCredential = GoogleAccountCredential.usingOAuth2
+                (getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+
     }
 
     private void getResultsFromApi() {
@@ -165,11 +166,18 @@ public class LoginActivity extends Activity
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
+            //Log.d("msg", "HERE1");
+
         } else if (!isDeviceOnline()) {
+            Toast toast = Toast.makeText(LoginActivity.this,"No network connection available.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+           // Log.d("msg", "HERE2");
             //mOutputText.setText("No network connection available.");
 
         } else {
             new MakeRequestTask(mCredential).execute();
+            //Log.d("msg", "HERE3");
         }
     }
 
@@ -191,11 +199,14 @@ public class LoginActivity extends Activity
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
+                //Log.d("msg", "HERE4");
+
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(
                         mCredential.newChooseAccountIntent(),
                         REQUEST_ACCOUNT_PICKER);
+                //Log.d("msg", "HERE5");
             }
         } else {
             // Request the GET_ACCOUNTS permission via a user dialog
@@ -204,8 +215,11 @@ public class LoginActivity extends Activity
                     "This app needs to access your Google account (via Contacts).",
                     REQUEST_PERMISSION_GET_ACCOUNTS,
                     Manifest.permission.GET_ACCOUNTS);
+            //Log.d("msg", "HERE6");
         }
+
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -214,6 +228,7 @@ public class LoginActivity extends Activity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(
                 requestCode, permissions, grantResults, this);
+        //Log.d("msg", "HERE7");
     }
 
     /**
@@ -226,6 +241,7 @@ public class LoginActivity extends Activity
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
         // Do nothing.
+        //Log.d("msg", "HERE8");
     }
 
     /**
@@ -238,6 +254,7 @@ public class LoginActivity extends Activity
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
         // Do nothing.
+        //Log.d("msg", "HERE9");
     }
 
 
@@ -249,6 +266,7 @@ public class LoginActivity extends Activity
         ConnectivityManager connMgr =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        //Log.d("msg", "HERE10");
         return (networkInfo != null && networkInfo.isConnected());
     }
 
@@ -262,6 +280,7 @@ public class LoginActivity extends Activity
                 GoogleApiAvailability.getInstance();
         final int connectionStatusCode =
                 apiAvailability.isGooglePlayServicesAvailable(this);
+        //Log.d("msg", "HERE12");
         return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
@@ -276,6 +295,7 @@ public class LoginActivity extends Activity
                 apiAvailability.isGooglePlayServicesAvailable(this);
         if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+            //Log.d("msg", "HERE13");
         }
     }
 
@@ -293,6 +313,8 @@ public class LoginActivity extends Activity
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
+
+       // Log.d("msg", "HERE14");
     }
 
     /**
@@ -310,6 +332,8 @@ public class LoginActivity extends Activity
                     transport, jsonFactory, credential)
                     .setApplicationName("Google Calendar API Android Quickstart")
                     .build();
+
+            //Log.d("msg", "HERE15");
         }
 
         /**
@@ -319,8 +343,10 @@ public class LoginActivity extends Activity
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
+              //  Log.d("msg", "HERE16");
                 return getDataFromApi();
             } catch (Exception e) {
+                //Log.d("msg", "HERE16.5");
                 mLastError = e;
                 cancel(true);
                 return null;
@@ -334,6 +360,7 @@ public class LoginActivity extends Activity
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
+            //Log.d("msg", "HERE17");
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary")
@@ -354,6 +381,7 @@ public class LoginActivity extends Activity
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
             }
+
             return eventStrings;
         }
 
@@ -361,6 +389,7 @@ public class LoginActivity extends Activity
         @Override
         protected void onPreExecute() {
             //mOutputText.setText("");
+            //Log.d("msg", "HERE18");
             mProgress.show();
         }
 
@@ -369,10 +398,20 @@ public class LoginActivity extends Activity
             mProgress.hide();
             if (output == null || output.size() == 0) {
                 //mOutputText.setText("No results returned.");
+                Toast toast = Toast.makeText(LoginActivity.this,"No results returned.", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                //Log.d("msg", "HERE19");
+
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
                 //mOutputText.setText(TextUtils.join("\n", output));
+                Toast toast = Toast.makeText(LoginActivity.this,TextUtils.join("\n", output), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 Log.d("output", TextUtils.join("\n", output));
+                //Log.d("msg", "HERE20");
+
             }
         }
 
@@ -384,16 +423,29 @@ public class LoginActivity extends Activity
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) mLastError)
                                     .getConnectionStatusCode());
+                   // Log.d("msg", "HERE21");
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             LoginActivity.REQUEST_AUTHORIZATION);
+
+                   // Log.d("msg", "HERE22");
                 } else {
                     //mOutputText.setText("The following error occurred:\n"
                             //+ mLastError.getMessage());
+                    Toast toast = Toast.makeText(LoginActivity.this,"The following error occurred:\n" + mLastError.getMessage(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                    //Log.d("msg", "HERE23");
                 }
             } else {
                 //mOutputText.setText("Request cancelled.");
+                Toast toast = Toast.makeText(LoginActivity.this,"Request cancelled.", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
+               // Log.d("msg", "HERE24");
             }
         }
     }

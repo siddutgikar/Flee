@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="0dp"
-    android:paddingLeft="100dp"
-    android:paddingRight="100dp"
+    android:paddingLeft="@dimen/activity_login_padding"
+    android:paddingRight="@dimen/activity_login_padding"
     android:background="#754C9A"
     android:weightSum="1"
     android:layout_gravity="center_vertical"
@@ -30,8 +30,8 @@
         android:hint="First Name"
         android:gravity="center_horizontal"
         android:background="@drawable/share_button_selector5"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -42,8 +42,8 @@
         android:hint="Last Name"
         android:gravity="center_horizontal"
         android:background="@drawable/share_button_selector5"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <EditText
         android:layout_marginBottom="10dp"
