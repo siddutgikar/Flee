@@ -83,7 +83,7 @@ public class JsonResponseParser {
      * @return
      */
     public static String getRandom() {
-        String[] array = {"#65C0AD", "#E37245", "#754C9A", "#FFC62C"};
+        String[] array = {"#65C0AD", "#E37245", "#754C9A"};
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
     }

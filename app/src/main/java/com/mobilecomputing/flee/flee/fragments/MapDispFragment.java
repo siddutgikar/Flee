@@ -32,6 +32,11 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
 
     ArrayList<EventBean> _eventList;
 
+
+    CameraUpdate zoomLevel;
+
+    CameraUpdate Animation;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
@@ -69,31 +74,28 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
+
     public void plotMarkers() {
         if (googleMap != null && _eventList != null && _eventList.size() > 0) {
             IconGenerator myFactory = new IconGenerator(getActivity());
             LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
             for (int i = 0; i < _eventList.size(); i++) {
-              //  if (i < 50) {
-                    double lat = _eventList.get(i).getLatitude();
-                    double lng = _eventList.get(i).getLongitude();
-                    if (lat != 0.0 && lng != 0.0) {
-                        if (_eventList.get(i).getColorIndex().equals("#754C9A")) {
-                            myFactory.setBackground(getResources().getDrawable(R.drawable.purple));
-                        } else if (_eventList.get(i).getColorIndex().equals("#65C0AD")) {
-                            myFactory.setBackground(getResources().getDrawable(R.drawable.green));
-                        } else if (_eventList.get(i).getColorIndex().equals("#E37245")) {
-                            myFactory.setBackground(getResources().getDrawable(R.drawable.orange));
-                        } else {
-                            myFactory.setBackground(getResources().getDrawable(R.drawable.yellow));
-                        }
-                        myFactory.setTextAppearance(getActivity(), R.style.markerStyle);
-                        Bitmap icon = myFactory.makeIcon("" + (i + 1));
-                        boundsBuilder.include(new LatLng(lat, lng));
-                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(icon)).position(new LatLng(lat, lng)).title(_eventList.get(i).getName()));
+                //  if (i < 50) {
+                double lat = _eventList.get(i).getLatitude();
+                double lng = _eventList.get(i).getLongitude();
+                if (lat != 0.0 && lng != 0.0) {
+                    if (_eventList.get(i).getColorIndex().equals("#754C9A")) {
+                        myFactory.setBackground(getResources().getDrawable(R.drawable.purple));
+                    } else if (_eventList.get(i).getColorIndex().equals("#65C0AD")) {
+                        myFactory.setBackground(getResources().getDrawable(R.drawable.green));
+                    } else {
+                        myFactory.setBackground(getResources().getDrawable(R.drawable.orange));
+                    }
+                    myFactory.setTextAppearance(getActivity(), R.style.markerStyle);
+                    Bitmap icon = myFactory.makeIcon("" + (i + 1));
+                    boundsBuilder.include(new LatLng(lat, lng));
+                    googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(icon)).position(new LatLng(lat, lng)).title(_eventList.get(i).getName()));
 
-
-                //    }
                 }
             }
 
@@ -116,11 +118,41 @@ public class MapDispFragment extends Fragment implements OnMapReadyCallback {
      */
     public void setMarkers(ArrayList<EventBean> eventBeanArrayList) {
         _eventList = eventBeanArrayList;
-        // plotMarkers();
+        plotMarkers();
 
     }
 
     public interface MapFragmentInterface {
         public void sendFromMap();
     }
+
+
+    public void setLocationFocus(EventBean selectedBean) {
+
+        if (selectedBean != null && googleMap != null) {
+            double lat = selectedBean.getLatitude();
+            double lng = selectedBean.getLongitude();
+            if (lat != 0.0 && lng != 0.0) {
+                LatLng latLng = new LatLng(lat, lng);
+                Animation = CameraUpdateFactory.newLatLng(latLng);
+                zoomLevel = CameraUpdateFactory.zoomTo(8);
+                googleMap.animateCamera(zoomLevel, 1000, new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        zoomLevel = CameraUpdateFactory.zoomTo(12);
+                        googleMap.moveCamera(Animation);
+                        googleMap.animateCamera(zoomLevel, 1000, null);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
+
+
+            }
+        }
+    }
+
 }

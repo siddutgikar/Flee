@@ -2,6 +2,7 @@
     <string name="app_name">Flee</string>
     <string name="select_category">select one or more</string>
     <string name="search">search</string>
+    <string name="title_activity_signup">SignupActivity</string>
     <string name="location">Location:</string>
     <string name="distance">Distance:</string>
 </resources>
