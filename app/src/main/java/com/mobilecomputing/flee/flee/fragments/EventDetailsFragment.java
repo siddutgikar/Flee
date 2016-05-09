@@ -2,7 +2,6 @@ package com.mobilecomputing.flee.flee.fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +29,6 @@ import com.mobilecomputing.flee.flee.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Created by siddh on 5/7/2016.
@@ -66,7 +64,6 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
      */
     EventBean _eventBean;
 
-    
 
     @Override
     public void onAttach(Context context) {
@@ -155,17 +152,28 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                 double lat = eventBean.getLatitude();
                 double lng = eventBean.getLongitude();
 
+                ViewGroup.LayoutParams params = imgView.getLayoutParams();
+
                 if (lat != 0.0 && lng != 0.0) {
+                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
                     eventLat = lat;
                     eventLng = lng;
                     String image_url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lng + "&zoom=12&size=" + width + "x" + height + "&sensor=false";
                     Log.d("MapsImage UR", image_url);
-                    Picasso.with(getActivity()).load(image_url).fit().into(imgView);
+                    Picasso.with(getActivity()).load(image_url).fit().error(getActivity().getResources().getDrawable(R.drawable.flee_broken)).into(imgView);
+                } else {
+                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    imgView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.flee_broken));
                 }
             } else {
+                Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
+
                 Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
+            Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
             Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             Log.e("EVENT Details Error", ex.toString());
         }

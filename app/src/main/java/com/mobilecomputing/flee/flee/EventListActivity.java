@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -76,6 +77,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     EditText edLocation;
 
+    Button btnSearch;
+
     MapDispFragment mapDispFragment;
 
     EventListFragment eventListFragment;
@@ -122,12 +125,15 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         EventListTask getEventTask = new EventListTask();
         getEventTask.execute();
 
+
     }
 
     /**
      * Will initialise all the UI elements
      */
     private void initView() {
+
+        getActionBar().setHomeButtonEnabled(true);
         lnFrameContainer = (LinearLayout) findViewById(R.id.frame_Containers);
         detailsLayout = (FrameLayout) findViewById(R.id.frame_Details);
         lnSearchLayout = (LinearLayout) findViewById(R.id.searchPanelLayout);
@@ -135,13 +141,14 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         edDate = (TextView) findViewById(R.id.srch_Date);
         spnCategory = (Spinner) findViewById(R.id.srch_Category);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
         eventListFragment = new EventListFragment();
         mapDispFragment = new MapDispFragment();
         eventDetailsFragment = new EventDetailsFragment();
         edDate.setOnClickListener(this);
         progressBar.bringToFront();
         progressBar.setVisibility(View.VISIBLE);
-
+        btnSearch.setOnClickListener(this);
         fromDatepickerdialog = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -264,6 +271,19 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                 Intent settingsIntent = new Intent(EventListActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;
+            case android.R.id.home:
+                if (!isAnimating) {
+                    if (!isSearchPanelVisible) {
+                        animatePanel(2);
+                    } else if (detailsLayout.getVisibility() == View.VISIBLE) {
+                        animatePanel(4);
+                    } else if (detailsLayout.getVisibility() == View.GONE && !isSearchPanelVisible) {
+                        onBackPressed();
+                    }
+
+                }
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -278,6 +298,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.btnSearch:
                 animatePanel(2);
+                EventListTask getEventTask = new EventListTask();
+                getEventTask.execute();
                 break;
             case R.id.srch_Date:
                 new DatePickerDialog(EventListActivity.this, fromDatepickerdialog,
@@ -429,6 +451,18 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     private void prepareUrl() {
         url = Constants.BASE_EVENT_URL + Constants.QUERY_ZIP + "21227" + Constants.QUERY_PAGE_SIZE + "50" + Constants.QUERY_TIME + Utilities.getCurrentTimeinEpoc(null) + "," + Utilities.getNextTimeinEpoc(null) + Constants.URL_AUTH;
+
+        /**
+         *  THis is for spinner values
+         **/
+        int spinner_pos = spnCategory.getSelectedItemPosition();
+        String[] size_values = getResources().getStringArray(R.array.categoryIDArray);
+        int categoryID = Integer.valueOf(size_values[spinner_pos]);
+
+        if (categoryID != 0) {
+            url = url + Constants.QUERY_CATEGORY + categoryID;
+        }
+
     }
 
 
