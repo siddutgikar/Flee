@@ -6,8 +6,8 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,13 +24,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
 
     ToggleButton tb36 = null;
 
-    ImageButton btnFinish;
+    Button btnFinish;
 
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        btnFinish=(ImageButton)findViewById(R.id.imageButton);
+        btnFinish=(Button)findViewById(R.id.finishButtonCategory);
         btnFinish.setOnClickListener(this);
         tb36 = (ToggleButton) findViewById(R.id.toggleCustomized35);
 
@@ -39,7 +39,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
         seekBar.incrementProgressBy(1);
         seekBar.setMax(4);
         final TextView seekBarValue = (TextView) findViewById(R.id.textViewSeekbar);
-        seekBarValue.setText("5 miles");
+        seekBarValue.setText("10 miles");
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -113,7 +113,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
 
         switch(v.getId())
         {
-            case R.id.imageButton:
+            case R.id.finishButtonCategory:
                 Toast.makeText(SettingsActivity.this,tb36.isChecked()+"",Toast.LENGTH_LONG).show();
                 break;
         }
