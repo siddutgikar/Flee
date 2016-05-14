@@ -1,14 +1,16 @@
 package com.mobilecomputing.flee.flee;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PersistableBundle;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.mobilecomputing.flee.flee.utils.Constants;
 
 /**
  * Created by siddh on 4/22/2016.
@@ -19,7 +21,7 @@ public class SplashScreenActivity extends Activity implements MediaPlayer.OnComp
     VideoView splash;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
 
         try {
 
@@ -32,8 +34,7 @@ public class SplashScreenActivity extends Activity implements MediaPlayer.OnComp
             splash.setVideoURI(splashPath);
             splash.start();
             splash.setOnCompletionListener(this);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
@@ -55,12 +56,23 @@ public class SplashScreenActivity extends Activity implements MediaPlayer.OnComp
 
         try {
             //When the splash screen finishes playing, start the next activity (login activity)
-            Intent startAppIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-            startActivity(startAppIntent);
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
+            if (sharedPreferences != null) {
+                String location = sharedPreferences.getString(Constants.LOCATION, "");
+                if (location != null && location.length() > 0) {
+
+                    Intent startAppIntent = new Intent(SplashScreenActivity.this, EventListActivity.class);
+                    startActivity(startAppIntent);
+                } else {
+
+                    Intent startAppIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(startAppIntent);
+                }
+            }
+
 
             finish();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }

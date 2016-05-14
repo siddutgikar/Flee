@@ -75,6 +75,7 @@
                 android:id="@+id/srch_Location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/share_button_selector5"
@@ -108,10 +109,19 @@
                 android:gravity="right|center">
 
                 <Button
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/share_button_selector"
+                    android:text="Clear" />
+
+                <Button
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/btnSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/share_button_selector"
                     android:text="Search" />
             </LinearLayout>
 

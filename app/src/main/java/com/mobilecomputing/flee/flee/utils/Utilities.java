@@ -16,6 +16,9 @@ public class Utilities {
     public static long getCurrentTimeinEpoc(String date) {
         long then = 0;
         if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(date));
+            then = cal.getTimeInMillis();
 
         } else {
             Calendar cal = Calendar.getInstance();
@@ -30,6 +33,12 @@ public class Utilities {
     public static long getNextTimeinEpoc(String date) {
         long then = 0;
         if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(date));
+            long now = cal.getTimeInMillis();
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+
+            then = cal.getTimeInMillis();
 
         } else {
             Calendar cal = Calendar.getInstance();

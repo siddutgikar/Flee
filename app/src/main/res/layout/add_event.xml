@@ -3,298 +3,308 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
- <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-     android:id="@+id/mainView"
-    android:layout_height="fill_parent"
-    android:layout_width = "fill_parent" >
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
 
-    tools:context="com.mobilecomputing.flee.flee.AddActivity">
+                tools:context="com.mobilecomputing.flee.flee.AddActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="ADD EVENT"
-        android:id="@+id/textViewAddEvent"
-        android:textSize="30sp"
-        android:textColor="#65BFAC"
-        android:textStyle="bold"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
+                <TextView
+                    android:id="@+id/textViewAddEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="50dp"
+                    android:text="ADD EVENT"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#65BFAC"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="EVENT NAME"
-        android:id="@+id/textViewEventName"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_alignTop="@+id/nameTextField"
-        android:layout_toEndOf="@+id/framePurple" />
+                <TextView
+                    android:id="@+id/textViewEventName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/nameTextField"
+                    android:layout_toEndOf="@+id/framePurple"
+                    android:text="EVENT NAME"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/nameTextField"
-        android:layout_alignTop="@+id/framePurple"
-        android:layout_toEndOf="@+id/textViewAddEvent" />
+                <EditText
+                    android:id="@+id/nameTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/framePurple"
+                    android:layout_toEndOf="@+id/textViewAddEvent"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
-        android:ems="10"
-        android:id="@+id/locationTextField"
-        android:layout_below="@+id/nameTextField"
-        android:layout_toEndOf="@+id/textViewTime" />
+                <EditText
+                    android:id="@+id/locationTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nameTextField"
+                    android:layout_toEndOf="@+id/textViewTime"
+                    android:ems="10"
+                    android:inputType="textPostalAddress" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="LOCATION"
-        android:id="@+id/textViewLocation"
-        android:layout_below="@+id/nameTextField"
-        android:layout_alignStart="@+id/textViewEventName"
-        android:textStyle="bold"
-        android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewEventName"
+                    android:layout_below="@+id/nameTextField"
+                    android:text="LOCATION"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/dateTextField"
-        android:layout_below="@+id/locationTextField"
-        android:layout_alignStart="@+id/locationTextField" />
+                <EditText
+                    android:id="@+id/dateTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/locationTextField"
+                    android:layout_below="@+id/locationTextField"
+                    android:ems="10"
+                    android:inputType="date" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/timeTextField"
-        android:layout_below="@+id/dateTextField"
-        android:layout_alignStart="@+id/dateTextField" />
+                <EditText
+                    android:id="@+id/timeTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/dateTextField"
+                    android:layout_below="@+id/dateTextField"
+                    android:ems="10"
+                    android:inputType="time" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/categoryTextField"
-        android:layout_below="@+id/timeTextField"
-        android:layout_alignEnd="@+id/timeTextField"
-        android:layout_alignStart="@+id/timeTextField" />
+                <EditText
+                    android:id="@+id/categoryTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/timeTextField"
+                    android:layout_alignStart="@+id/timeTextField"
+                    android:layout_below="@+id/timeTextField" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="DATE"
-        android:id="@+id/textViewDate"
-        android:layout_below="@+id/locationTextField"
-        android:layout_alignStart="@+id/textViewLocation"
-        android:textStyle="bold"
-        android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewLocation"
+                    android:layout_below="@+id/locationTextField"
+                    android:text="DATE"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="CATEGORY"
-        android:id="@+id/textViewCategory"
-        android:layout_below="@+id/timeTextField"
-        android:layout_alignStart="@+id/textViewTime"
-        android:textStyle="bold"
-        android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/textViewCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewTime"
+                    android:layout_below="@+id/timeTextField"
+                    android:text="CATEGORY"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="TIME"
-        android:id="@+id/textViewTime"
-        android:layout_alignStart="@+id/textViewLocation"
-        android:layout_alignTop="@+id/timeTextField"
-        android:layout_toStartOf="@+id/nameTextField"
-        android:textStyle="bold"
-        android:textColor="#000000" />
+                <TextView
+                    android:id="@+id/textViewTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewLocation"
+                    android:layout_alignTop="@+id/timeTextField"
+                    android:layout_toStartOf="@+id/nameTextField"
+                    android:text="TIME"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="DESCRIPTION"
-        android:id="@+id/textViewDescr"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/categoryTextField"
-        android:layout_alignEnd="@+id/textViewCategory" />
+                <TextView
+                    android:id="@+id/textViewDescr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/textViewCategory"
+                    android:layout_below="@+id/categoryTextField"
+                    android:layout_marginTop="50dp"
+                    android:text="DESCRIPTION"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
-    <EditText
-        android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/descrTextField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50sp"
+                    android:layout_alignEnd="@+id/nameTextField"
+                    android:layout_alignStart="@+id/textViewDescr"
+                    android:layout_below="@+id/textViewDescr"
+                    android:background="@drawable/edittext_border"
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
+
+                <ImageButton
+                    android:id="@+id/doneButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/descrTextField"
+                    android:layout_below="@+id/descrTextField"
+                    android:layout_marginTop="10dp"
+                    android:background="#0000"
+                    android:src="@drawable/done" />
+
+                <ImageButton
+                    android:id="@+id/uploadImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/doneButton"
+                    android:layout_alignTop="@+id/textViewAddEvent"
+                    android:background="#0000"
+                    android:src="@drawable/uploadeventphoto" />
+
+                <FrameLayout
+                    android:id="@+id/framePurple"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_alignStart="@+id/textViewAddEvent"
+                    android:layout_marginTop="170dp">
+
+                    <ImageView
+                        android:padding="10dp"
+                        android:id="@+id/purpleDot"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:src="#744c9b" />
+
+                    <ImageView
+                        android:padding="10dp"
+                        android:id="@+id/circleCropPurple"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:src="@drawable/circle" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameBlue"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_alignEnd="@+id/framePurple"
+                    android:layout_alignTop="@+id/textViewLocation">
+
+                    <ImageView
+                        android:id="@+id/blueDot"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="#65c0ad" />
+
+                    <ImageView
+                        android:id="@+id/circleCropBlue"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="@drawable/circle" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameRed"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_alignEnd="@+id/framePurple"
+                    android:layout_alignTop="@+id/textViewDate">
+
+                    <ImageView
+                        android:id="@+id/redDot"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="#E37245" />
+
+                    <ImageView
+                        android:id="@+id/circleCropRed"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="@drawable/circle" />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/frameRed2"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_alignEnd="@+id/framePurple"
+                    android:layout_alignTop="@+id/textViewTime">
+
+                    <ImageView
+                        android:id="@+id/redDot2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="#E37245" />
+
+                    <ImageView
+                        android:id="@+id/circleCropRed2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="@drawable/circle" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameYellow"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_alignEnd="@+id/framePurple"
+                    android:layout_alignTop="@+id/textViewCategory">
+
+                    <ImageView
+                        android:id="@+id/yellowDot"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="#FFC62C" />
+
+                    <ImageView
+                        android:id="@+id/circleCropYellow"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:padding="10dp"
+                        android:src="@drawable/circle" />
+                </FrameLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="50sp"
         android:layout_height="50sp"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/descrTextField"
-        android:background="@drawable/edittext_border"
-        android:layout_below="@+id/textViewDescr"
-        android:layout_alignStart="@+id/textViewDescr"
-        android:layout_alignEnd="@+id/nameTextField" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/doneButton"
-        android:src="@drawable/done"
-        android:layout_below="@+id/descrTextField"
-        android:layout_alignRight="@+id/descrTextField"
-        android:background="#0000" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/uploadImageButton"
-        android:src="@drawable/uploadeventphoto"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="66dp"
         android:background="#0000"
-        android:layout_alignTop="@+id/textViewAddEvent"
-        android:layout_alignEnd="@+id/doneButton" />
-
-    <FrameLayout
-        android:id="@+id/framePurple"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_marginTop="170dp"
-        android:layout_alignStart="@+id/textViewAddEvent">
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/purpleDot"
-            android:src="#744c9b" />
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/circleCropPurple"
-            android:src="@drawable/circle" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frameBlue"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_alignTop="@+id/textViewLocation"
-        android:layout_alignEnd="@+id/framePurple">
-
-    <ImageView
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:id="@+id/blueDot"
-        android:src="#65c0ad" />
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/circleCropBlue"
-            android:src="@drawable/circle" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frameRed"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_alignTop="@+id/textViewDate"
-        android:layout_alignEnd="@+id/framePurple">
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/redDot"
-            android:src="#E37245" />
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/circleCropRed"
-            android:src="@drawable/circle" />
-    </FrameLayout>
-
-
-    <FrameLayout
-        android:id="@+id/frameRed2"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_alignTop="@+id/textViewTime"
-        android:layout_alignEnd="@+id/framePurple">
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/redDot2"
-            android:src="#E37245" />
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/circleCropRed2"
-            android:src="@drawable/circle" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frameYellow"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_alignTop="@+id/textViewCategory"
-        android:layout_alignEnd="@+id/framePurple">
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/yellowDot"
-        android:src="#FFC62C" />
-
-        <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:id="@+id/circleCropYellow"
-            android:src="@drawable/circle" />
-    </FrameLayout>
-
-</RelativeLayout>
-
-    </LinearLayout>
-
- </ScrollView>
-
-<ImageButton
-    android:layout_width="50sp"
-    android:layout_height="50sp"
-    android:id="@+id/backButton"
-    android:src="@drawable/back_arrow"
-    android:background="#0000"
-    android:layout_marginEnd="66dp"
-    android:layout_marginBottom="60dp"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true" />
+        android:src="@drawable/back_arrow"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -124,6 +124,9 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
      * @param eventBean
      */
     public void setEventDetails(EventBean eventBean) {
+        ViewGroup.LayoutParams params = imgView.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         try {
             _eventBean = eventBean;
             if (eventBean != null) {
@@ -152,28 +155,29 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                 double lat = eventBean.getLatitude();
                 double lng = eventBean.getLongitude();
 
-                ViewGroup.LayoutParams params = imgView.getLayoutParams();
+
 
                 if (lat != 0.0 && lng != 0.0) {
-                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
-                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
+
                     eventLat = lat;
                     eventLng = lng;
                     String image_url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lng + "&zoom=12&size=" + width + "x" + height + "&sensor=false";
                     Log.d("MapsImage UR", image_url);
                     Picasso.with(getActivity()).load(image_url).fit().error(getActivity().getResources().getDrawable(R.drawable.flee_broken)).into(imgView);
                 } else {
-                    params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
-                    params.width= ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
                     imgView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.flee_broken));
                 }
             } else {
-                Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
-
-                Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                imgView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.flee_broken));               Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
-            Picasso.with(getActivity()).load(R.drawable.flee_broken).into(imgView);
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            imgView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.flee_broken));
             Toast.makeText(getActivity(), Constants.ERROR_MSG, Toast.LENGTH_LONG).show();
             Log.e("EVENT Details Error", ex.toString());
         }

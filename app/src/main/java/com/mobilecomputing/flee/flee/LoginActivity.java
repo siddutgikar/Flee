@@ -93,7 +93,7 @@ public class LoginActivity extends Activity
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mUsername.getText().toString().toLowerCase().equals("fleeuser")) {
+                /*if(mUsername.getText().toString().toLowerCase().equals("fleeuser")) {
                    if(mPassword.getText().toString().equals("12345"))
                    {
                        Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
@@ -110,7 +110,10 @@ public class LoginActivity extends Activity
                     toast.show();
                 }
 
-
+*/
+                Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
+                startActivity(myIntent);
+                LoginActivity.this.finish();
             }
         });
 
@@ -169,10 +172,10 @@ public class LoginActivity extends Activity
             //Log.d("msg", "HERE1");
 
         } else if (!isDeviceOnline()) {
-            Toast toast = Toast.makeText(LoginActivity.this,"No network connection available.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(LoginActivity.this, "No network connection available.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-           // Log.d("msg", "HERE2");
+            // Log.d("msg", "HERE2");
             //mOutputText.setText("No network connection available.");
 
         } else {
@@ -234,9 +237,10 @@ public class LoginActivity extends Activity
     /**
      * Callback for when a permission is granted using the EasyPermissions
      * library.
+     *
      * @param requestCode The request code associated with the requested
-     *         permission
-     * @param list The requested permission list. Never null.
+     *                    permission
+     * @param list        The requested permission list. Never null.
      */
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
@@ -247,9 +251,10 @@ public class LoginActivity extends Activity
     /**
      * Callback for when a permission is denied using the EasyPermissions
      * library.
+     *
      * @param requestCode The request code associated with the requested
-     *         permission
-     * @param list The requested permission list. Never null.
+     *                    permission
+     * @param list        The requested permission list. Never null.
      */
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
@@ -260,6 +265,7 @@ public class LoginActivity extends Activity
 
     /**
      * Checks whether the device currently has a network connection.
+     *
      * @return true if the device has a network connection, false otherwise.
      */
     private boolean isDeviceOnline() {
@@ -272,8 +278,9 @@ public class LoginActivity extends Activity
 
     /**
      * Check that Google Play services APK is installed and up to date.
+     *
      * @return true if Google Play Services is available and up to
-     *     date on this device; false otherwise.
+     * date on this device; false otherwise.
      */
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability apiAvailability =
@@ -302,8 +309,9 @@ public class LoginActivity extends Activity
     /**
      * Display an error dialog showing that Google Play Services is missing
      * or out of date.
+     *
      * @param connectionStatusCode code describing the presence (or lack of)
-     *     Google Play Services on this device.
+     *                             Google Play Services on this device.
      */
     void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
@@ -314,7 +322,7 @@ public class LoginActivity extends Activity
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
 
-       // Log.d("msg", "HERE14");
+        // Log.d("msg", "HERE14");
     }
 
     /**
@@ -338,12 +346,13 @@ public class LoginActivity extends Activity
 
         /**
          * Background task to call Google Calendar API.
+         *
          * @param params no parameters needed for this task.
          */
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-              //  Log.d("msg", "HERE16");
+                //  Log.d("msg", "HERE16");
                 return getDataFromApi();
             } catch (Exception e) {
                 //Log.d("msg", "HERE16.5");
@@ -355,6 +364,7 @@ public class LoginActivity extends Activity
 
         /**
          * Fetch a list of the next 10 events from the primary calendar.
+         *
          * @return List of Strings describing returned events.
          * @throws IOException
          */
@@ -398,7 +408,7 @@ public class LoginActivity extends Activity
             mProgress.hide();
             if (output == null || output.size() == 0) {
                 //mOutputText.setText("No results returned.");
-                Toast toast = Toast.makeText(LoginActivity.this,"No results returned.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(LoginActivity.this, "No results returned.", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 //Log.d("msg", "HERE19");
@@ -406,7 +416,7 @@ public class LoginActivity extends Activity
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
                 //mOutputText.setText(TextUtils.join("\n", output));
-                Toast toast = Toast.makeText(LoginActivity.this,TextUtils.join("\n", output), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(LoginActivity.this, TextUtils.join("\n", output), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 Log.d("output", TextUtils.join("\n", output));
@@ -423,17 +433,17 @@ public class LoginActivity extends Activity
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) mLastError)
                                     .getConnectionStatusCode());
-                   // Log.d("msg", "HERE21");
+                    // Log.d("msg", "HERE21");
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             LoginActivity.REQUEST_AUTHORIZATION);
 
-                   // Log.d("msg", "HERE22");
+                    // Log.d("msg", "HERE22");
                 } else {
                     //mOutputText.setText("The following error occurred:\n"
-                            //+ mLastError.getMessage());
-                    Toast toast = Toast.makeText(LoginActivity.this,"The following error occurred:\n" + mLastError.getMessage(), Toast.LENGTH_SHORT);
+                    //+ mLastError.getMessage());
+                    Toast toast = Toast.makeText(LoginActivity.this, "The following error occurred:\n" + mLastError.getMessage(), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
@@ -441,14 +451,15 @@ public class LoginActivity extends Activity
                 }
             } else {
                 //mOutputText.setText("Request cancelled.");
-                Toast toast = Toast.makeText(LoginActivity.this,"Request cancelled.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(LoginActivity.this, "Request cancelled.", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
 
-               // Log.d("msg", "HERE24");
+                // Log.d("msg", "HERE24");
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();

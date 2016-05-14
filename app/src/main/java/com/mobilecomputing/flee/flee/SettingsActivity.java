@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,19 +24,17 @@ import android.widget.ToggleButton;
 import com.mobilecomputing.flee.flee.utils.Constants;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by siddh on 4/22/2016.
  * Last modified by asen on 5/9/16.
  */
-public class SettingsActivity extends Activity implements View.OnClickListener{
+public class SettingsActivity extends Activity implements View.OnClickListener {
 
-    ToggleButton tb11,tb12,tb13,tb14,tb15,tb16;
-    ToggleButton tb21,tb22,tb23,tb24,tb25,tb26;
-    ToggleButton tb31,tb32,tb33,tb34,tb35,tb36;
+    ToggleButton tb11, tb12, tb13, tb14, tb15, tb16;
+    ToggleButton tb21, tb22, tb23, tb24, tb25, tb26;
+    ToggleButton tb31, tb32, tb33, tb34, tb35, tb36;
     TextView tvSelect, tvLocation, tvDistance, tvSeekbar;
     EditText etLocation;
     Button btnFinish;
@@ -40,10 +42,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
 
     Typeface fedraSansStdBook;
     SharedPreferences sharedPreferences;
-    Set<String> categories;
+    String categoriesID;
 
     @Override
-    public void onCreate(Bundle savedInstanceState ) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -75,23 +77,25 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
         tvDistance = (TextView) findViewById(R.id.textViewDistance);
         tvSeekbar = (TextView) findViewById(R.id.textViewSeekbar);
 
+
         fedraSansStdBook = Typeface.createFromAsset(this.getAssets(), "fonts/FedraSansStd-Book.ttf");
-
-        tvSelect.setTypeface(fedraSansStdBook);
-        tvSelect.setTypeface(fedraSansStdBook);
-        tvSelect.setTypeface(fedraSansStdBook);
-        tvSelect.setTypeface(fedraSansStdBook);
-
         sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
 
-        btnFinish=(Button)findViewById(R.id.finishButtonCategory);
+        btnFinish = (Button) findViewById(R.id.finishButtonCategory);
         btnFinish.setOnClickListener(this);
 
-        SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(Color.parseColor("#754C9A"), PorterDuff.Mode.SRC));
         seekBar.setProgress(0);
         seekBar.incrementProgressBy(1);
         seekBar.setMax(4);
         final TextView seekBarValue = (TextView) findViewById(R.id.textViewSeekbar);
+        seekBarValue.setTypeface(fedraSansStdBook);
+        tvLocation.setTypeface(fedraSansStdBook);
+        etLocation.setTypeface(fedraSansStdBook);
+        tvSeekbar.setTypeface(fedraSansStdBook);
+        tvDistance.setTypeface(fedraSansStdBook);
+        tvSelect.setTypeface(fedraSansStdBook);
         seekBarValue.setText("10 miles");
         progressString = String.valueOf(seekBar.getProgress() * 5 + 5);
 
@@ -131,8 +135,71 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
 
-        Set<String> resSet = sharedPreferences.getStringSet(Constants.CATEGORY, categories);
+        resetSelectedPreferences();
 
+    }
+
+    /**
+     * ADDED BY SIDDHARTH
+     */
+    private void resetSelectedPreferences() {
+        try {
+            String resSet = sharedPreferences.getString(Constants.CATEGORY, "");
+
+
+            if (resSet != null) {
+                String arrCatID[] = resSet.split(",");
+                for (int i = 0; i < arrCatID.length; i++) {
+                    String catID = arrCatID[i];
+                    if ("32".equals(catID)) {
+                        tb11.setChecked(true);
+                    } else if ("21".equals(catID)) {
+                        tb12.setChecked(true);
+                    } else if ("2".equals(catID)) {
+                        tb13.setChecked(true);
+                    } else if ("28".equals(catID)) {
+                        tb14.setChecked(true);
+                    } else if ("11".equals(catID)) {
+                        tb15.setChecked(true);
+                    } else if ("9".equals(catID)) {
+                        tb16.setChecked(true);
+                    } else if ("10".equals(catID)) {
+                        tb21.setChecked(true);
+                    } else if ("26".equals(catID)) {
+                        tb22.setChecked(true);
+                    } else if ("20".equals(catID)) {
+                        tb23.setChecked(true);
+                    } else if ("31".equals(catID)) {
+                        tb24.setChecked(true);
+                    } else if ("6".equals(catID)) {
+                        tb25.setChecked(true);
+                    } else if ("25".equals(catID)) {
+                        tb26.setChecked(true);
+                    } else if ("13".equals(catID)) {
+                        tb31.setChecked(true);
+                    } else if ("4".equals(catID)) {
+                        tb32.setChecked(true);
+                    } else if ("23".equals(catID)) {
+                        tb33.setChecked(true);
+                    } else if ("8".equals(catID)) {
+                        tb34.setChecked(true);
+                    } else if ("15".equals(catID)) {
+                        tb35.setChecked(true);
+                    } else if ("26".equals(catID)) {
+                        tb36.setChecked(true);
+                    }
+
+                }
+
+            }
+            String locationString = sharedPreferences.getString(Constants.LOCATION, "");
+            etLocation.setText(locationString);
+            String seekValue = sharedPreferences.getString(Constants.DISTANCE, "");
+            tvDistance.setText(seekValue);
+
+        } catch (Exception ex) {
+            Log.e("Reset prefs", ex.toString());
+        }
     }
 
     @Override
@@ -143,72 +210,71 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        switch(v.getId())
-        {
+        switch (v.getId()) {
             case R.id.finishButtonCategory:
 
                 String[] categoryIDs = getResources().getStringArray(R.array.categoryIDArray);
 
-                categories = new HashSet<String>();
+                categoriesID = "";
 
-                if(tb11.isChecked()) {
-                    categories.add(categoryIDs[0]);
+                if (tb11.isChecked()) {
+                    categoriesID = categoriesID + ",32";
                 }
-                if(tb12.isChecked()){
-                    categories.add(categoryIDs[1]);
+                if (tb12.isChecked()) {
+                    categoriesID = categoriesID + ",21";
                 }
-                if(tb13.isChecked()){
-                    categories.add(categoryIDs[2]);
+                if (tb13.isChecked()) {
+                    categoriesID = categoriesID + ",2";
                 }
-                if(tb14.isChecked()) {
-                    categories.add(categoryIDs[3]);
+                if (tb14.isChecked()) {
+                    categoriesID = categoriesID + ",28";
                 }
-                if(tb15.isChecked()){
-                    categories.add(categoryIDs[4]);
+                if (tb15.isChecked()) {
+                    categoriesID = categoriesID + ",11";
                 }
-                if(tb16.isChecked()){
-                    categories.add(categoryIDs[5]);
+                if (tb16.isChecked()) {
+                    categoriesID = categoriesID + ",9";
                 }
-                if(tb21.isChecked()) {
-                    categories.add(categoryIDs[6]);
+                if (tb21.isChecked()) {
+                    categoriesID = categoriesID + ",10";
                 }
-                if(tb22.isChecked()){
-                    categories.add(categoryIDs[7]);
+                if (tb22.isChecked()) {
+                    categoriesID = categoriesID + ",26";
                 }
-                if(tb23.isChecked()){
-                    categories.add(categoryIDs[8]);
+                if (tb23.isChecked()) {
+                    categoriesID = categoriesID + ",20";
                 }
-                if(tb24.isChecked()) {
-                    categories.add(categoryIDs[9]);
+                if (tb24.isChecked()) {
+                    categoriesID = categoriesID + ",31";
                 }
-                if(tb25.isChecked()){
-                    categories.add(categoryIDs[10]);
+                if (tb25.isChecked()) {
+                    categoriesID = categoriesID + ",6";
                 }
-                if(tb26.isChecked()){
-                    categories.add(categoryIDs[11]);
+                if (tb26.isChecked()) {
+                    categoriesID = categoriesID + ",25";
                 }
-                if(tb31.isChecked()) {
-                    categories.add(categoryIDs[12]);
+                if (tb31.isChecked()) {
+                    categoriesID = categoriesID + ",13";
                 }
-                if(tb32.isChecked()){
-                    categories.add(categoryIDs[13]);
+                if (tb32.isChecked()) {
+                    categoriesID = categoriesID + ",4";
                 }
-                if(tb33.isChecked()){
-                    categories.add(categoryIDs[14]);
+                if (tb33.isChecked()) {
+                    categoriesID = categoriesID + ",23";
                 }
-                if(tb34.isChecked()) {
-                    categories.add(categoryIDs[15]);
+                if (tb34.isChecked()) {
+                    categoriesID = categoriesID + ",8";
                 }
-                if(tb35.isChecked()){
-                    categories.add(categoryIDs[16]);
+                if (tb35.isChecked()) {
+                    categoriesID = categoriesID + ",15";
                 }
-                if(tb36.isChecked()){
-                    categories.add(categoryIDs[17]);
+                if (tb36.isChecked()) {
+                    categoriesID = categoriesID + ",26";
                 }
 
                 SharedPreferences.Editor edit = sharedPreferences.edit();
-                if(categories != null && !categories.isEmpty()) {
-                    edit.putStringSet(Constants.CATEGORY, categories);
+                if (categoriesID != null && !categoriesID.isEmpty()) {
+                    edit.putString(Constants.CATEGORY, categoriesID);
                     edit.commit();
                 } else {
                     Toast.makeText(getApplicationContext(), "Please select at least one Category.", Toast.LENGTH_LONG).show();
@@ -217,7 +283,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
 
                 String location = etLocation.getText().toString();
 
-                if(location != null && !location.isEmpty()) {
+
+                if (location != null && !location.isEmpty()) {
                     Geocoder gc = new Geocoder(this);
                     List<Address> list = null;
                     try {
@@ -225,20 +292,26 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Address add = list.get(0);
-                    if(add != null) {
-                        String postalCode = add.getPostalCode();
-                        if(postalCode != null && !postalCode.isEmpty()){
-                            edit.putString(Constants.ZIPCODE, postalCode);
+                    if (list != null && list.size() > 0) {
+                        Address add = list.get(0);
+                        if (add != null) {
+                            edit.putString(Constants.LOCATION, location);
+                            String postalCode = add.getPostalCode();
+                            if (postalCode != null && !postalCode.isEmpty()) {
+                                edit.putString(Constants.ZIPCODE, postalCode);
+                            } else {
+                                edit.putString(Constants.ZIPCODE, "");
+                            }
+                            Double latitude = add.getLatitude();
+                            Double longitude = add.getLongitude();
+                            edit.putString(Constants.LATITUDE, latitude.toString());
+                            edit.putString(Constants.LONGITUDE, longitude.toString());
+                            // Toast.makeText(getApplicationContext(), latitude.toString(), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), longitude.toString(), Toast.LENGTH_LONG).show();
                         } else {
-                            edit.putString(Constants.ZIPCODE, "");
+                            Toast.makeText(getApplicationContext(), "Location not found. Please try again.", Toast.LENGTH_LONG).show();
+                            break;
                         }
-                        Double latitude = add.getLatitude();
-                        Double longitude = add.getLongitude();
-                        edit.putString(Constants.LATITUDE, latitude.toString());
-                        edit.putString(Constants.LONGITUDE, longitude.toString());
-                        Toast.makeText(getApplicationContext(), latitude.toString(), Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(), longitude.toString(), Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Location not found. Please try again.", Toast.LENGTH_LONG).show();
                         break;
@@ -251,8 +324,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener{
                 edit.putString(Constants.DISTANCE, progressString);
                 edit.commit();
 
-                Intent eventActivityIntent = new Intent(this,EventListActivity.class);
+                Intent eventActivityIntent = new Intent(this, EventListActivity.class);
                 startActivity(eventActivityIntent);
+                this.finish();
                 break;
         }
 

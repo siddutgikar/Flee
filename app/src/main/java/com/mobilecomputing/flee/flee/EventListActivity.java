@@ -1,8 +1,14 @@
 package com.mobilecomputing.flee.flee;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobilecomputing.flee.flee.data.EventBean;
 import com.mobilecomputing.flee.flee.fragments.EventDetailsFragment;
@@ -34,8 +41,11 @@ import com.mobilecomputing.flee.flee.utils.JsonResponseParser;
 import com.mobilecomputing.flee.flee.utils.Utilities;
 import com.mobilecomputing.flee.flee.utils.WebServiceHelper;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.Response;
 
@@ -77,7 +87,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     EditText edLocation;
 
-    Button btnSearch;
+    Button btnSearch, btnClear;
 
     MapDispFragment mapDispFragment;
 
@@ -116,6 +126,11 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     private Calendar calendar = Calendar.getInstance();
 
+    String zipcode = "21227";
+
+    SharedPreferences sharedPreferences;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +148,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     private void initView() {
 
+        sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         lnFrameContainer = (LinearLayout) findViewById(R.id.frame_Containers);
         detailsLayout = (FrameLayout) findViewById(R.id.frame_Details);
@@ -149,6 +166,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         progressBar.bringToFront();
         progressBar.setVisibility(View.VISIBLE);
         btnSearch.setOnClickListener(this);
+        btnClear = (Button) findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(this);
         fromDatepickerdialog = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -157,8 +176,8 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, day);
 
-                edDate.setText(new StringBuilder().append(day + "/")
-                        .append(month + 1 + "/").append(year));
+                edDate.setText(new StringBuilder().append((month + 1) + "/")
+                        .append(day + "/").append(year));
             }
         };
 
@@ -205,6 +224,9 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     public void animatePanel(int direction) {
         switch (direction) {
             case 1:
+                if (detailsLayout.getVisibility() == View.VISIBLE) {
+                    animatePanel(4);
+                }
                 lnSearchLayout.bringToFront();
                 lnSearchLayout.clearAnimation();
                 lnSearchLayout.setAnimation(transIn_Right);
@@ -273,7 +295,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                 break;
             case android.R.id.home:
                 if (!isAnimating) {
-                    if (!isSearchPanelVisible) {
+                    if (isSearchPanelVisible) {
                         animatePanel(2);
                     } else if (detailsLayout.getVisibility() == View.VISIBLE) {
                         animatePanel(4);
@@ -282,6 +304,30 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                     }
 
                 }
+
+                break;
+            case R.id.event_menuLogOut:
+                new AlertDialog.Builder(EventListActivity.this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+
+                                sharedPreferences.edit().clear().commit();
+                                Intent logoutIntent = new Intent(EventListActivity.this, LoginActivity.class);
+                                startActivity(logoutIntent);
+                                EventListActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(R.drawable.flee_broken)
+                        .show();
+
 
                 break;
         }
@@ -306,6 +352,11 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                         calendar.get(Calendar.YEAR), calendar
                         .get(Calendar.MONTH), calendar
                         .get(Calendar.DAY_OF_MONTH)).show();
+                break;
+            case R.id.btnClear:
+                edDate.setText("");
+                edLocation.setText("");
+                spnCategory.setSelection(0);
                 break;
 
         }
@@ -435,8 +486,12 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
                     ArrayList<EventBean> eventBeanArrayList = JsonResponseParser.parseEventListResponse(s);
                     Log.d("PostExecute", "" + eventBeanArrayList.size());
-                    eventListFragment.setEventData(eventBeanArrayList);
-                    mapDispFragment.setMarkers(eventBeanArrayList);
+                    if (eventBeanArrayList != null && eventBeanArrayList.size() > 0) {
+                        eventListFragment.setEventData(eventBeanArrayList);
+                        mapDispFragment.setMarkers(eventBeanArrayList);
+                    } else {
+                        Toast.makeText(EventListActivity.this, "No events found.", Toast.LENGTH_LONG).show();
+                    }
                 }
             } catch (Exception ex) {
                 Log.e("OnPostExecute", ex.toString());
@@ -450,20 +505,66 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      * This Function will build the URL
      */
     private void prepareUrl() {
-        url = Constants.BASE_EVENT_URL + Constants.QUERY_ZIP + "21227" + Constants.QUERY_PAGE_SIZE + "50" + Constants.QUERY_TIME + Utilities.getCurrentTimeinEpoc(null) + "," + Utilities.getNextTimeinEpoc(null) + Constants.URL_AUTH;
+
+        url = Constants.BASE_EVENT_URL + Constants.QUERY_PAGE_SIZE + "50" + Constants.URL_AUTH + "&status=upcoming";
 
         /**
          *  THis is for spinner values
          **/
         int spinner_pos = spnCategory.getSelectedItemPosition();
         String[] size_values = getResources().getStringArray(R.array.categoryIDArray);
-        int categoryID = Integer.valueOf(size_values[spinner_pos]);
+        String categoryID = size_values[spinner_pos];
 
-        if (categoryID != 0) {
+        if (!"0".equals(categoryID)) {
             url = url + Constants.QUERY_CATEGORY + categoryID;
+        } else {
+            categoryID = sharedPreferences.getString(Constants.CATEGORY, "");
+            url = url + Constants.QUERY_CATEGORY + "0" + categoryID;
         }
 
-    }
+        /**
+         *  Date filter
+         */
 
+        String date = edDate.getText().toString();
+
+        if (date != null && date.length() > 0) {
+            long longDate = 0;
+            longDate = Utilities.getCurrentTimeinEpoc(date);
+            if (longDate != 0) {
+                url = url + Constants.QUERY_TIME + Utilities.getCurrentTimeinEpoc(date) + "," + Utilities.getNextTimeinEpoc(date);
+            }
+        }
+
+        try {
+            String location = edLocation.getText().toString();
+            if (location != null && location.length() > 0) {
+                String encodedlocation = URLEncoder.encode(location, "UTF-8");
+
+                Geocoder geocoder = new Geocoder(getApplicationContext());
+                List<Address> addresses = null;
+
+
+                try {
+                    // Getting a maximum of 3 Address that matches the input text
+                    addresses = geocoder.getFromLocationName(location, 3);
+                    if (addresses != null && addresses.size() > 0) {
+                        url = url + Constants.QUERY_CITY + encodedlocation + Constants.QUERY_LAT + addresses.get(0).getLatitude() + Constants.QUERY_LON + addresses.get(0).getLongitude();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+
+                url = url + Constants.QUERY_LAT + sharedPreferences.getString(Constants.LATITUDE, "") + Constants.QUERY_LON + sharedPreferences.getString(Constants.LONGITUDE, "");
+            }
+
+        } catch (Exception ex) {
+            Log.e("URL ENCODE", ex.toString());
+        }
+        Log.d("Prepare URL", url);
+
+    }
 
 }

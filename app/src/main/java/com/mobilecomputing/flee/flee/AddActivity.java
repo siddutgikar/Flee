@@ -2,25 +2,15 @@ package com.mobilecomputing.flee.flee;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.StateSet;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 //created by apyryt on 5/7/16
 
@@ -43,7 +33,8 @@ public class AddActivity extends Activity implements View.OnClickListener {
 
             //create the custom font
             Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Bold.ttf");
-
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
             //initialize textViews
             addEventLabel = (TextView) findViewById(R.id.textViewAddEvent);
             nameLabel = (TextView) findViewById(R.id.nameTextField);
@@ -78,8 +69,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
 
             backButton = (ImageButton) findViewById(R.id.backButton);
             backButton.setOnClickListener(this);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
@@ -128,8 +118,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
                     finish();
                     break;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
@@ -151,10 +140,23 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 //   uploadImage.setImageURI(null);
                 //   uploadImage.setImageURI(selectedImage);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 }
