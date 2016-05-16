@@ -7,10 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.URLEncoder;
 
 //created by apyryt on 5/7/16
 
@@ -23,6 +27,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
     private ImageButton uploadImage, done, backButton;
 
     private Uri selectedImage;
+    private WebView openURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,13 @@ public class AddActivity extends Activity implements View.OnClickListener {
 
             backButton = (ImageButton) findViewById(R.id.backButton);
             backButton.setOnClickListener(this);
+
+            //initializes the WebView - used for opening the URL for the PHP script
+            openURL = (WebView) findViewById(R.id.web);
+            openURL.getSettings().setJavaScriptEnabled(true);
+            openURL.setWebViewClient(new WebViewClient());
+
+
         } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
@@ -98,24 +110,29 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 //create an event to add to the database
                 case R.id.doneButton:
 
-                    //gets the information the user entered in
-                    String retrievedName = name.getText().toString();
-                    String retrievedLocation = location.getText().toString();
-                    String retrievedDate = date.getText().toString();
-                    String retrievedTime = time.getText().toString();
-                    String retrievedCategory = category.getText().toString();
-                    String retrievedDescr = description.getText().toString();
+                    //connect to the database and add the event
+                    String newEvent = URLEncoder.encode("eventName", "UTF-8") + "=" + URLEncoder.encode(name.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventLocation", "UTF-8") + "=" + URLEncoder.encode(location.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventDate", "UTF-8") + "=" + URLEncoder.encode(date.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventTime", "UTF-8") + "=" + URLEncoder.encode(time.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventCategory", "UTF-8") + "=" + URLEncoder.encode(category.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventDescription", "UTF-8") + "=" + URLEncoder.encode(description.getText().toString(), "UTF-8");
 
-                    //add the event to the list of events...
+                    //calls the PHP script with the user-entered fields
+                    openURL.loadUrl("http://mpss.csce.uark.edu/~team1/add_to_table.php?" + newEvent);
+                    Toast messageDoneToast = Toast.makeText(AddActivity.this, "Event has been added!", Toast.LENGTH_LONG);
+                    messageDoneToast.show();
 
-                    Toast notification = Toast.makeText(this, "Event has been added", Toast.LENGTH_LONG);
-                    notification.show();
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
 
-                    //go to the EventList activity when the new event has been created
-                    //Intent eventListIntent = new Intent(this, EventListActivity.class);
-                    //eventListIntent.putExtra();
-                    //startActivity(eventListIntent);
-                    finish();
+                                    //starts the event Activity after the PHP field is finished
+                                    Intent eventListing = new Intent(AddActivity.this, EventListActivity.class);
+                                    startActivity(eventListing);
+                                }
+                            }
+                            , 2000);
                     break;
             }
         } catch (Exception e) {
