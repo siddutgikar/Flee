@@ -59,7 +59,7 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     private boolean isSearchPanelVisible = false, isAnimating = false;
     /**
-     * Animations for sliding of Search Panel
+     * Animations for sliding of Search Panel and Fragments
      */
     TranslateAnimation transIn_Right;
     TranslateAnimation transOut_Right;
@@ -86,19 +86,38 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      * Edit text for search by Location
      */
     EditText edLocation;
-
+    /**
+     * Button Objects for Search and Clear for the Search Panel
+     */
     Button btnSearch, btnClear;
-
+    /**
+     * Map Display Fragment to access the Map Fragment Methods
+     */
     MapDispFragment mapDispFragment;
 
+    /**
+     * Event List Fragment to access the Fragment Method
+     */
     EventListFragment eventListFragment;
 
+    /**
+     * Event Details Fragment to access the Fragment Method
+     */
     EventDetailsFragment eventDetailsFragment;
 
+    /**
+     * URL String will be used to prepare URL at every request
+     */
     String url = "";
 
+    /**
+     * THe response string will hold the Json
+     */
     String responseString = "";
 
+    /**
+     * Response Code will be to show the
+     */
     int responseCode = 0;
 
     /**
@@ -126,8 +145,9 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
      */
     private Calendar calendar = Calendar.getInstance();
 
-    String zipcode = "21227";
-
+    /**
+     * Preferences object to access Shared Preference values
+     */
     SharedPreferences sharedPreferences;
 
 
@@ -272,10 +292,16 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         }
     }
 
-
+    /**
+     * Options Menu Listener
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // Search Menu Will be opened
             case R.id.event_menusearch:
                 if (!isAnimating) {
                     if (!isSearchPanelVisible) {
@@ -285,14 +311,18 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
                     }
                 }
                 break;
+            // Add Event Activity will be called
             case R.id.event_menuadd:
                 Intent addNewIntent = new Intent(EventListActivity.this, AddActivity.class);
                 startActivity(addNewIntent);
                 break;
+            // Settings Activity will be called
             case R.id.event_menufilter:
                 Intent settingsIntent = new Intent(EventListActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
+                this.finish();
                 break;
+            // Home button on Actions Menu will be called
             case android.R.id.home:
                 if (!isAnimating) {
                     if (isSearchPanelVisible) {
@@ -342,21 +372,34 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            /**
+             * Button Search In Search Panel will be calling this part of the code
+             * This will start the search for Event List with the filters entered
+             */
             case R.id.btnSearch:
                 animatePanel(2);
                 EventListTask getEventTask = new EventListTask();
                 getEventTask.execute();
                 break;
+            /**
+             *  Called when Date input box is clicked
+             *  This opens a date picker dialog
+             *  The Date picker di
+             */
             case R.id.srch_Date:
                 new DatePickerDialog(EventListActivity.this, fromDatepickerdialog,
                         calendar.get(Calendar.YEAR), calendar
                         .get(Calendar.MONTH), calendar
                         .get(Calendar.DAY_OF_MONTH)).show();
                 break;
+            /**
+             *  Clear button implementation to clear the data fields
+             */
             case R.id.btnClear:
                 edDate.setText("");
                 edLocation.setText("");
                 spnCategory.setSelection(0);
+
                 break;
 
         }
@@ -373,11 +416,14 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     }
 
 
+    // Sets the isAnimating Flag true
+    // This helps understanding if a current animation is in progress before starting a new one
     @Override
     public void onAnimationStart(Animation animation) {
         isAnimating = true;
     }
 
+    // Sets the isAnimating Flag False
     @Override
     public void onAnimationEnd(Animation animation) {
         isAnimating = false;
@@ -399,11 +445,18 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
     }
 
 
+    /**
+     * This fucntion has been implemented for the Map Fragment to communicate with the Activity
+     * Implementation has not been required as of now
+     */
     @Override
     public void sendFromMap() {
 
     }
 
+    /**
+     * The Onbackpressed event has been over ridden to handle the back events in case of various fragments
+     */
     @Override
     public void onBackPressed() {
         if (isSearchPanelVisible) {
@@ -420,6 +473,15 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
         }
     }
 
+    /**
+     * This function will be called from Event List Fragment
+     * Its responsibility is to pass the event bean received to the Event Details Fragment
+     * <p/>
+     * This function will call the Events Details Fragment function which will fill the fragment
+     * with passed data
+     *
+     * @param selectedBean
+     */
     @Override
     public void eventListClick(EventBean selectedBean) {
 
@@ -432,6 +494,12 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     }
 
+    /**
+     * This fuction will be called from the EVent List Fragment
+     * Its responsibilty is to pass the event bean to the Events Details fragment
+     *
+     * @param selectedBean
+     */
     @Override
     public void eventListLongClick(EventBean selectedBean) {
 
@@ -444,7 +512,14 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
 
     /**
-     *
+     * Event List Task is an Inner Class Extending Async Task.
+     * This task is designed to Fetch the list of events from the Server
+     * The Task has 3 methods Implementation
+     * 1. OnPreExecute : Will Prepare the URL which needs to be accessed
+     * 2. doInBackground : Will actually Ping the Server and fetch the data
+     * 3. OnPostExecute : Will parse the Json Response. This will also call
+     * event list fragment for displaying the list
+     * Map Fragment for displaying the markers
      */
     public class EventListTask extends AsyncTask<Void, Void, String> {
 
@@ -503,13 +578,13 @@ public class EventListActivity extends FragmentActivity implements View.OnClickL
 
     /**
      * This Function will build the URL
+     * In case of Search it will build the URL based on filters
      */
     private void prepareUrl() {
 
         url = Constants.BASE_EVENT_URL + Constants.QUERY_PAGE_SIZE + "50" + Constants.URL_AUTH + "&status=upcoming";
-
         /**
-         *  THis is for spinner values
+         *  THis is for spinner values of Category
          **/
         int spinner_pos = spnCategory.getSelectedItemPosition();
         String[] size_values = getResources().getStringArray(R.array.categoryIDArray);
