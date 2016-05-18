@@ -58,6 +58,7 @@ public class SplashScreenActivity extends Activity implements MediaPlayer.OnComp
             //When the splash screen finishes playing, start the next activity (login activity)
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
             if (sharedPreferences != null) {
+
                 String location = sharedPreferences.getString(Constants.LOCATION, "");
                 if (location != null && location.length() > 0) {
 
