@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Created by siddh on 4/22/2016.
- * Last modified by asen on 5/9/16.
+ * Last modified by asen on 5/17/16.
  */
 public class SettingsActivity extends Activity implements View.OnClickListener {
 
@@ -40,7 +40,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     Button btnFinish;
     String progressString;          // Distance in miles
 
-    Typeface fedraSansStdBook;
+    Typeface fedraSansStdBook;      // Custom font
     SharedPreferences sharedPreferences;
     String categoriesID;
 
@@ -49,6 +49,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // hide keyboard if visible on load
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         tb11 = (ToggleButton) findViewById(R.id.toggleCustomized11);
@@ -77,26 +78,33 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         tvDistance = (TextView) findViewById(R.id.textViewDistance);
         tvSeekbar = (TextView) findViewById(R.id.textViewSeekbar);
 
-
+        // custom font for textView and buttons
         fedraSansStdBook = Typeface.createFromAsset(this.getAssets(), "fonts/FedraSansStd-Book.ttf");
+        // shared preference file to save the user's favorite categories, location and distance
         sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
 
         btnFinish = (Button) findViewById(R.id.finishButtonCategory);
         btnFinish.setOnClickListener(this);
 
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        // change the default yellow color of the seek bar to purple
         seekBar.getProgressDrawable().setColorFilter(new PorterDuffColorFilter(Color.parseColor("#754C9A"), PorterDuff.Mode.SRC));
+        // set initial progress
         seekBar.setProgress(0);
         seekBar.incrementProgressBy(1);
+        // set the maximum possible value making it accept only 5 values
         seekBar.setMax(4);
         final TextView seekBarValue = (TextView) findViewById(R.id.textViewSeekbar);
+        // apply the custom font
         seekBarValue.setTypeface(fedraSansStdBook);
         tvLocation.setTypeface(fedraSansStdBook);
         etLocation.setTypeface(fedraSansStdBook);
         tvSeekbar.setTypeface(fedraSansStdBook);
         tvDistance.setTypeface(fedraSansStdBook);
         tvSelect.setTypeface(fedraSansStdBook);
+        // update textView associated with the seek bar
         seekBarValue.setText("10 miles");
+        // seek bar can only be 0 - 4, but we want 5, 10, 15, 20 and 25 miles as values selected
         progressString = String.valueOf(seekBar.getProgress() * 5 + 5);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -105,9 +113,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     if (progress >= 1 && progress <= seekBar.getMax()) {
-
+                        // update value when seek bar is changed
                         progressString = String.valueOf(progress * 5 + 5);
-
+                        // update textView accordingly
                         seekBarValue.setText(progressString + " miles"); // the TextView Reference
                         seekBar.setSecondaryProgress(progress);
                     } else {
@@ -135,6 +143,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
 
+        // if the user previously selected preferences
+        // update the screen accordingly
         resetSelectedPreferences();
 
     }
@@ -145,7 +155,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     private void resetSelectedPreferences() {
         try {
             String resSet = sharedPreferences.getString(Constants.CATEGORY, "");
-
 
             if (resSet != null) {
                 String arrCatID[] = resSet.split(",");
@@ -213,8 +222,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.finishButtonCategory:
 
-                String[] categoryIDs = getResources().getStringArray(R.array.categoryIDArray);
-
                 categoriesID = "";
 
                 if (tb11.isChecked()) {
@@ -272,6 +279,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                     categoriesID = categoriesID + ",26";
                 }
 
+                // store the categories string in the preferences file
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 if (categoriesID != null && !categoriesID.isEmpty()) {
                     edit.putString(Constants.CATEGORY, categoriesID);
@@ -283,11 +291,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
                 String location = etLocation.getText().toString();
 
-
                 if (location != null && !location.isEmpty()) {
                     Geocoder gc = new Geocoder(this);
                     List<Address> list = null;
                     try {
+                        // Geocoder returns a list of addresses that match the text search.
+                        // We only want the first one and we only store
+                        // zip code, latitude and longitude from it.
                         list = gc.getFromLocationName(location, 1);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -306,8 +316,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                             Double longitude = add.getLongitude();
                             edit.putString(Constants.LATITUDE, latitude.toString());
                             edit.putString(Constants.LONGITUDE, longitude.toString());
-                            // Toast.makeText(getApplicationContext(), latitude.toString(), Toast.LENGTH_LONG).show();
-                            //Toast.makeText(getApplicationContext(), longitude.toString(), Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "Location not found. Please try again.", Toast.LENGTH_LONG).show();
                             break;
@@ -324,11 +332,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 edit.putString(Constants.DISTANCE, progressString);
                 edit.commit();
 
+                // if we have all information we need start the next activity
                 Intent eventActivityIntent = new Intent(this, EventListActivity.class);
                 startActivity(eventActivityIntent);
                 this.finish();
                 break;
         }
-
     }
 }
