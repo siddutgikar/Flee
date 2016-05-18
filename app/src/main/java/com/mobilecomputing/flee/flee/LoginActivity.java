@@ -76,8 +76,10 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //setting a custom font for all of the buttons in this activity
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Book.ttf");
 
+        //setting all buttons to the same font
         mforgotButton = (TextView) findViewById(R.id.termsConditions);
         mforgotButton.setTypeface(font);
         mtermsButton = (TextView) findViewById(R.id.forgotPassword);
@@ -88,6 +90,7 @@ public class LoginActivity extends Activity
         mPassword = (TextView) findViewById(R.id.passwordText);
         mPassword.setTypeface(font);
 
+        //setting corresponding click listeners for the buttons
         mLoginButton = (Button) findViewById(R.id.loginButton);
         mLoginButton.setTypeface(font);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -96,10 +99,12 @@ public class LoginActivity extends Activity
                 if(mUsername.getText().toString().toLowerCase().equals("fleeuser")) {
                    if(mPassword.getText().toString().equals("12345"))
                    {
+                       //setting the intent to the next activity
                        Intent myIntent = new Intent(LoginActivity.this, SettingsActivity.class);
                        startActivity(myIntent);
 
                    } else{
+                        //sends toast if log in does not match proper credentials
                        Toast toast = Toast.makeText(LoginActivity.this,"Invalid Username or Password!", Toast.LENGTH_SHORT);
                        toast.setGravity(Gravity.CENTER, 0, 0);
                        toast.show();
@@ -137,6 +142,7 @@ public class LoginActivity extends Activity
             }
         });
 
+        //setting toasts to notify user that these features have not been implemented yet
         mtermsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,12 +161,14 @@ public class LoginActivity extends Activity
             }
         });
 
+        //calling the activity to prompt the user to log in to google.
         mCredential = GoogleAccountCredential.usingOAuth2
                 (getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
 
     }
 
+    //code implemented from google documentation, full functionality will be added later
     private void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
