@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.net.URLEncoder;
 
 //created by apyryt on 5/7/16
+// modified on 5/18/16
 
 public class AddActivity extends Activity implements View.OnClickListener {
 
@@ -66,6 +67,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
             category = (EditText) findViewById(R.id.categoryTextField);
             description = (EditText) findViewById(R.id.descrTextField);
 
+			//initializes buttons
             uploadImage = (ImageButton) findViewById(R.id.uploadImageButton);
             uploadImage.setOnClickListener(this);
 
@@ -118,11 +120,12 @@ public class AddActivity extends Activity implements View.OnClickListener {
                     newEvent += URLEncoder.encode("eventCategory", "UTF-8") + "=" + URLEncoder.encode(category.getText().toString(), "UTF-8") + "&";
                     newEvent += URLEncoder.encode("eventDescription", "UTF-8") + "=" + URLEncoder.encode(description.getText().toString(), "UTF-8");
 
-                    //calls the PHP script with the user-entered fields
+                    //calls the PHP script with the user-entered fields in the WebView
                     openURL.loadUrl("http://mpss.csce.uark.edu/~team1/add_to_table.php?" + newEvent);
                     Toast messageDoneToast = Toast.makeText(AddActivity.this, "Event has been added!", Toast.LENGTH_LONG);
                     messageDoneToast.show();
 
+					//waits a few seconds until the script has posted the events to the database
                     new android.os.Handler().postDelayed(
                             new Runnable() {
                                 public void run() {
@@ -144,23 +147,25 @@ public class AddActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        try {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            super.onActivityResult(requestCode, resultCode, data);
-
-            //records the URI for the selected image
-            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
+        //records the URI for the selected image
+        if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
+		
+			try {
 
                 selectedImage = data.getData();
 
                 //set the imageButton as the image selected by the user
                 //   uploadImage.setImageURI(null);
                 //   uploadImage.setImageURI(selectedImage);
-            }
-        } catch (Exception e) {
-            Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
-            notification.show();
-        }
+            
+			} 
+			catch (Exception e) {
+				Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
+				notification.show();
+			}
+		}
     }
 
 

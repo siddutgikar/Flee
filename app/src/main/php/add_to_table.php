@@ -1,5 +1,8 @@
 <?php
 
+#created by apyryt on 5/13/16
+
+#getting the parameters from the PHP request
 $eventName = $_REQUEST["eventName"];
 if (!$eventName) {
 	$eventName = "NULL";
@@ -29,7 +32,7 @@ if (!$eventCategory) {
 	$eventCategory = "NULL";
 }
 
-#logging into database
+#logging into database with the comm
 $host = "mpss.csce.uark.edu";
 $user = "crowdsource";
 $password = "crowdsource123~";
@@ -55,44 +58,22 @@ if (!$result) {
 	$query = "SHOW TABLES LIKE 'EVENTS'";
 	$res = mysql_query($query, $con);
 	if (!$res || mysql_num_rows($res) == 0) {
-    		$query = "CREATE TABLE EVENTS(id INT(6) AUTO_INCREMENT PRIMARY KEY, eventName VARCHAR(100), eventLocation VARCHAR(100), eventDate DATE, eventTime TIME, eventCategory VARCHAR(20), eventDescription VARCHAR(500));";
-   		 $res = mysql_query($query, $con);
-    		if (!$res) {
-        		echo "Error creating a table " . mysqlerror() . "\n";
-    		}
-        }
-        else {
-		echo "<a>hello</a>";
-         }
-}
-else {
 
-echo "<a>" . "esfds" . "</a><br />";
+		#our table has 7 columns: an id, the event name, location, date, time, category, and description
+		$query = "CREATE TABLE EVENTS(id INT(6) AUTO_INCREMENT PRIMARY KEY, eventName VARCHAR(100), eventLocation VARCHAR(100), eventDate DATE, eventTime TIME, eventCategory VARCHAR(20), eventDescription VARCHAR(500));";
+   		$res = mysql_query($query, $con);
+    	if (!$res) {
+        	echo "Error creating a table " . mysqlerror() . "\n";
+    	}
+    }
 }
-echo "<a>" . "e=fdsfds" . "</a><br />";
-#insert into the database
+
+#add a new row with the values from the request into the database
 $query = "INSERT INTO EVENTS (eventName, eventLocation, eventDate, eventTime, eventCategory, eventDescription) values (\"$eventName\", \"$eventLocation\", $eventDate, $eventTime, \"$eventCategory\", \"$eventDescription\");";
-
-echo "<a>" . $query . "</a>";
 $result = mysql_query($query, $con);
 if (!$result) {
     echo "Error in inserting into the table " . mysql_error() . "\n";
 }
-
-#$query =  “SELECT * from $username2 ORDER by ID DESC LIMIT 1”
-#$result = mysql_query($query, $con);
-
-#result points to the first row of whatever is returned back by the query
-#if (!$result) {
-#           echo “Error in downloading the last row for user: $username2” . mysql_error() . “\n”;
-#}
-#else {
-#          $lastlatitude = mysql_result($result, 0, “LATITUDE”);
-#		$lastlongitude = mysql_result($result, 0, “LONGITUDE”);
-#          $timestamp = mysql_result($timestamp, 0, “TIMESTAMP”);
-#}
-#echo “$lastlatitude,” . “$lastlongitude,” . “$lasttimestamp” . “\n”;
 mysql_close($con);
 
-echo "<a>it worked!</a>";
 ?>

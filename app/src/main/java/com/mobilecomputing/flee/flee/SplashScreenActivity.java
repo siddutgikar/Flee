@@ -55,16 +55,21 @@ public class SplashScreenActivity extends Activity implements MediaPlayer.OnComp
     public void onCompletion(MediaPlayer mp) {
 
         try {
-            //When the splash screen finishes playing, start the next activity (login activity)
+            //When the splash screen finishes playing, start the next activity (login activity or event list activity)
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.CATEGORY_PREFS, Context.MODE_PRIVATE);
             if (sharedPreferences != null) {
 
                 String location = sharedPreferences.getString(Constants.LOCATION, "");
+				
+				//if the user is already logged in, go straight to the event list activity
                 if (location != null && location.length() > 0) {
 
                     Intent startAppIntent = new Intent(SplashScreenActivity.this, EventListActivity.class);
                     startActivity(startAppIntent);
-                } else {
+						
+                } 
+				//if the user is new, start the login activity right away
+				else {
 
                     Intent startAppIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                     startActivity(startAppIntent);
