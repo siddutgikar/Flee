@@ -2,27 +2,22 @@ package com.mobilecomputing.flee.flee;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.StateSet;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.net.URLEncoder;
 
 //created by apyryt on 5/7/16
+// modified on 5/18/16
 
 public class AddActivity extends Activity implements View.OnClickListener {
 
@@ -33,6 +28,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
     private ImageButton uploadImage, done, backButton;
 
     private Uri selectedImage;
+    private WebView openURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +39,8 @@ public class AddActivity extends Activity implements View.OnClickListener {
 
             //create the custom font
             Typeface font = Typeface.createFromAsset(getAssets(), "fonts/FedraSansStd-Bold.ttf");
-
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
             //initialize textViews
             addEventLabel = (TextView) findViewById(R.id.textViewAddEvent);
             nameLabel = (TextView) findViewById(R.id.nameTextField);
@@ -70,6 +67,7 @@ public class AddActivity extends Activity implements View.OnClickListener {
             category = (EditText) findViewById(R.id.categoryTextField);
             description = (EditText) findViewById(R.id.descrTextField);
 
+			//initializes buttons
             uploadImage = (ImageButton) findViewById(R.id.uploadImageButton);
             uploadImage.setOnClickListener(this);
 
@@ -78,8 +76,14 @@ public class AddActivity extends Activity implements View.OnClickListener {
 
             backButton = (ImageButton) findViewById(R.id.backButton);
             backButton.setOnClickListener(this);
-        }
-        catch (Exception e) {
+
+            //initializes the WebView - used for opening the URL for the PHP script
+            openURL = (WebView) findViewById(R.id.web);
+            openURL.getSettings().setJavaScriptEnabled(true);
+            openURL.setWebViewClient(new WebViewClient());
+
+
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
@@ -108,28 +112,33 @@ public class AddActivity extends Activity implements View.OnClickListener {
                 //create an event to add to the database
                 case R.id.doneButton:
 
-                    //gets the information the user entered in
-                    String retrievedName = name.getText().toString();
-                    String retrievedLocation = location.getText().toString();
-                    String retrievedDate = date.getText().toString();
-                    String retrievedTime = time.getText().toString();
-                    String retrievedCategory = category.getText().toString();
-                    String retrievedDescr = description.getText().toString();
+                    //connect to the database and add the event
+                    String newEvent = URLEncoder.encode("eventName", "UTF-8") + "=" + URLEncoder.encode(name.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventLocation", "UTF-8") + "=" + URLEncoder.encode(location.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventDate", "UTF-8") + "=" + URLEncoder.encode(date.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventTime", "UTF-8") + "=" + URLEncoder.encode(time.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventCategory", "UTF-8") + "=" + URLEncoder.encode(category.getText().toString(), "UTF-8") + "&";
+                    newEvent += URLEncoder.encode("eventDescription", "UTF-8") + "=" + URLEncoder.encode(description.getText().toString(), "UTF-8");
 
-                    //add the event to the list of events...
+                    //calls the PHP script with the user-entered fields in the WebView
+                    openURL.loadUrl("http://mpss.csce.uark.edu/~team1/add_to_table.php?" + newEvent);
+                    Toast messageDoneToast = Toast.makeText(AddActivity.this, "Event has been added!", Toast.LENGTH_LONG);
+                    messageDoneToast.show();
 
-                    Toast notification = Toast.makeText(this, "Event has been added", Toast.LENGTH_LONG);
-                    notification.show();
+					//waits a few seconds until the script has posted the events to the database
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
 
-                    //go to the EventList activity when the new event has been created
-                    //Intent eventListIntent = new Intent(this, EventListActivity.class);
-                    //eventListIntent.putExtra();
-                    //startActivity(eventListIntent);
-                    finish();
+                                    //starts the event Activity after the PHP field is finished
+                                    Intent eventListing = new Intent(AddActivity.this, EventListActivity.class);
+                                    startActivity(eventListing);
+                                }
+                            }
+                            , 2000);
                     break;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
             notification.show();
         }
@@ -138,23 +147,38 @@ public class AddActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        try {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            super.onActivityResult(requestCode, resultCode, data);
-
-            //records the URI for the selected image
-            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
+        //records the URI for the selected image
+        if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
+		
+			try {
 
                 selectedImage = data.getData();
 
                 //set the imageButton as the image selected by the user
                 //   uploadImage.setImageURI(null);
                 //   uploadImage.setImageURI(selectedImage);
-            }
+            
+			} 
+			catch (Exception e) {
+				Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
+				notification.show();
+			}
+		}
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
         }
-        catch (Exception e) {
-            Toast notification = Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG);
-            notification.show();
-        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 }

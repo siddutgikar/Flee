@@ -3,139 +3,137 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E37245"
     android:orientation="vertical"
-    android:paddingTop="10dp"
     android:paddingLeft="@dimen/activity_login_padding"
     android:paddingRight="@dimen/activity_login_padding"
-    android:background="#E37245">
-
+    android:paddingTop="10dp">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="fill_parent"
         android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="false"
         android:gravity="center">
 
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        >
-
-        <ImageView
-            android:layout_marginBottom="10dp"
-            android:id="@+id/imgMap"
-            android:layout_width="155dp"
-            android:layout_height="73dp"
-            android:src="@drawable/flee_small"
-             />
-
-
-        <EditText
-            android:layout_marginBottom="10dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/userText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            android:hint="Email or Username"
-            android:gravity="center_horizontal"
-            android:background="@drawable/share_button_selector5"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+            <ImageView
+                android:id="@+id/imgMap"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/activity_login_image"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/flee" />
 
-        <EditText
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/passwordText"
+            <EditText
+                android:id="@+id/userText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
 
-            android:hint="Password"
-            android:gravity="center_horizontal"
-            android:background="@drawable/share_button_selector5"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+                android:background="@drawable/share_button_selector5"
+                android:gravity="center_horizontal"
+                android:hint="Email or Username"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
 
-        <Button
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOGIN"
-            android:id="@+id/loginButton"
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/share_button_selector5"
+                android:ems="10"
 
-            android:background="@drawable/share_button_selector3"
-            android:focusableInTouchMode="false"
-            android:textColor="#FFFFFF"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"/>
+                android:gravity="center_horizontal"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
 
-        <Button
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SIGN UP"
-            android:id="@+id/signupButton"
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/share_button_selector3"
 
-            android:background="@drawable/share_button_selector"
-            android:textColor="#FFFFFF"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"/>
+                android:focusableInTouchMode="false"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="LOGIN"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log in with Google"
-            android:id="@+id/apiLoginButton"
+            <Button
+                android:id="@+id/signupButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/share_button_selector"
 
-            android:background="@drawable/share_button_selector2"
-            android:textColor="#FFFFFF"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="SIGN UP"
+                android:textColor="#FFFFFF" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/apiLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/share_button_selector2"
+
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="Log in with Google"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|bottom"
         android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginBottom="5dp"
+            android:id="@+id/forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot your password?"
-            android:id="@+id/forgotPassword"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/transparent"
 
-            android:textColor="#FFFFFF"
-            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingBottom="5dp"
-            android:background="@android:color/transparent" />
+            android:paddingTop="5dp"
+            android:text="Forgot your password?"
+            android:textColor="#FFFFFF" />
 
         <TextView
+            android:id="@+id/termsConditions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Terms and Agreement"
-            android:id="@+id/termsConditions"
-            android:textColor="#FFFFFF"
-            android:paddingTop="5dp"
+            android:background="@android:color/transparent"
+            android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingBottom="5dp"
-            android:background="@android:color/transparent" />
+            android:paddingTop="5dp"
+            android:text="Terms and Agreement"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </LinearLayout>

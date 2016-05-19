@@ -94,7 +94,7 @@ public class EventListAdapter extends BaseAdapter {
         if (time > 0) {
 
             String date = new SimpleDateFormat("dd MMM hh:mm a")
-                    .format(new java.util.Date(_eventList.get(position).getTime() * 1000));
+                    .format(new java.util.Date(_eventList.get(position).getTime() ));
             hold.txtTime.setText(date);
         } else {
             hold.txtTime.setText("soon...");
